@@ -1,7 +1,9 @@
 <?php
-require_once('Manager.php');
 
-class articleManager extends Manager
+use App\Framework\Manager;
+require_once('Framework\Manager.php');
+
+class ArticleManager extends Manager
 {
     public function postArticle($title, $author, $content, $image)
     {
@@ -14,8 +16,8 @@ class articleManager extends Manager
     public function modifyArticle($id, $title, $author, $content, $image )
     {
 		$db = $this->dbConnect();
-		$req = $db->prepare('UPDATE article SET title=?, author=?, content=?, image=? WHERE id=? ');
-		$affectedLines = $req->execute(array($title, $author, $content, $image, $id ));
+		$req = $db->prepare('UPDATE article SET title=:title, author=?, content=?, image=? WHERE id=? ');
+		$affectedLines = $req->execute(array('title'=>$title, $author, $content, $image, $id ));
 		return $affectedLines;
     }
 
@@ -38,9 +40,12 @@ class articleManager extends Manager
 	public function getArticle($id)
 	{
 		$db = $this->dbConnect();
-		$req = $db->prepare('SELECT title, author, content, image FROM article WHERE id=?');
-		$affectedLines = $req->execute(array($id));
-		return $affectedLines;
-
+		$req = $db->prepare('SELECT title, author, content, image FROM article WHERE id = :id');
+		$req->execute(array('id'=>$id));
+		return $req;
 	}
 }
+
+
+
+

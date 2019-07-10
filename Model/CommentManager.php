@@ -1,12 +1,15 @@
 <?php
-require_once('Manager.php');
 
-class commentManager extends Manager
+use App\Framework\Manager;
+
+require_once('Framework\Manager.php');
+
+class CommentManager extends Manager
 {
 	public function postComment($idArticle, $alias, $contentComment)
 	{
 		$db = $this->dbConnect();
-		$req = $db->prepare('INSERT INTO comment(idArticle, alias, comment) VALUES(?,?,?)');
+		$req = $db->prepare('INSERT INTO comment(idArticle, alias, content) VALUES(?,?,?)');
 		$affectedLines = $req->execute(array($idArticle, $alias, $contentComment));
 		return $affectedLines;
 	}
@@ -22,7 +25,7 @@ class commentManager extends Manager
     public function getComments($idArticle)
     {
 		$db = $this->dbConnect();
-		$req = $db->prepare('SELECT alias, comment FROM comment WHERE idArticle=? ORDER BY date');
+		$req = $db->prepare('SELECT alias, content FROM comment WHERE idArticle=? ORDER BY date');
 		$affectedLines = $req->execute(array($idArticle));
 		return $affectedLines;
     }

@@ -1,9 +1,9 @@
 <?php
-class article{
-    private $_title=null;
-    private $_author=null;
-    private $_content=null;
-    private $_image=null;
+class Article{
+    private $title=null;
+    private $author=null;
+    private $content=null;
+    private $image=null;
 
     public function __construct($_title, $_author, $_content, $_image){
 
@@ -17,34 +17,34 @@ class article{
 
     public function getTitle()
     {
-        return $this->_title;
+        return $this->title;
     }
     public function getAuthor()
     {
-        return $this->_author;
+        return $this->author;
     }
     public function getArticleContent()
     {
-        return $this->_content;
+        return $this->content;
     }
     public function getImage()
     {
-        return $this->_image;
+        return $this->image;
     }
 
     // setters modifient propriétés
 
     public function setTitle($title){
-        $this->_title=$title;
+        $this->title=$title;
     }
     public function setAuthor($author){
-        $this->_author=$author;
+        $this->author=$author;
     }
     public function setArticleContent($content){
-        $this->_content=$content;
+        $this->content=$content;
     }
     public function setImage($image){
-        $this->_image=$image;
+        $this->image=$image;
     }
 }
 
