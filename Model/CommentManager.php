@@ -1,8 +1,8 @@
 <?php
 
-use App\Framework\Manager;
-
-require_once('Framework\Manager.php');
+namespace App\Model;
+use \App\Framework\Manager;
+require_once('..\Framework\Manager.php');
 
 class CommentManager extends Manager
 {
@@ -25,9 +25,9 @@ class CommentManager extends Manager
     public function getComments($idArticle)
     {
 		$db = $this->dbConnect();
-		$req = $db->prepare('SELECT alias, content FROM comment WHERE idArticle=? ORDER BY date');
-		$affectedLines = $req->execute(array($idArticle));
-		return $affectedLines;
+		$req = $db->prepare('SELECT id, alias, content, date FROM comment WHERE idArticle=? ORDER BY date');
+		$req->execute(array($idArticle));
+		return $req;
     }
 
     public function reportComment($id)

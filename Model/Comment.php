@@ -1,4 +1,7 @@
 <?php
+
+namespace App\Model;
+
 class Comment{
 	private $_idArticle=null;
 	private $_alias=null;

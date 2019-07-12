@@ -1,7 +1,9 @@
 <?php
 
-use App\Framework\Manager;
-require_once('Framework\Manager.php');
+namespace App\Model;
+use \App\Framework\Manager;
+
+require_once('..\Framework\Manager.php');
 
 class ArticleManager extends Manager
 {
@@ -32,7 +34,7 @@ class ArticleManager extends Manager
     public function getArticles()
     {
         $db = $this->dbConnect();
-        $req = $db->query('SELECT title, author, content, image FROM article ORDER BY date DESC LIMIT 0, 5');
+        $req = $db->query('SELECT id, title, date, author, content, image FROM article ORDER BY date DESC LIMIT 0, 5');
         return $req;
 
     }
@@ -40,7 +42,7 @@ class ArticleManager extends Manager
 	public function getArticle($id)
 	{
 		$db = $this->dbConnect();
-		$req = $db->prepare('SELECT title, author, content, image FROM article WHERE id = :id');
+		$req = $db->prepare('SELECT title, date, author, content, image FROM article WHERE id = :id');
 		$req->execute(array('id'=>$id));
 		return $req;
 	}
