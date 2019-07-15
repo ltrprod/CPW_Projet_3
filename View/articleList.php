@@ -1,4 +1,5 @@
 <?php
+require_once('..\Framework\Manager.php');
 require_once('..\Model\ArticleManager.php');
 
 use App\Model\ArticleManager;

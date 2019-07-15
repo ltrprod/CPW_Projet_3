@@ -1,9 +1,8 @@
 <?php
 
 namespace App\Model;
-use \App\Framework\Manager;
+use App\Framework\Manager;
 
-require_once('..\Framework\Manager.php');
 
 class ArticleManager extends Manager
 {
@@ -39,12 +38,25 @@ class ArticleManager extends Manager
 
     }
 
-	public function getArticle($id)
+    /**
+     * @param $id
+     * @return Article
+     * @throws \Exception
+     */
+    public function getArticle($id): Article
 	{
 		$db = $this->dbConnect();
 		$req = $db->prepare('SELECT title, date, author, content, image FROM article WHERE id = :id');
 		$req->execute(array('id'=>$id));
-		return $req;
+		$article = $req->fetchObject(Article::class);
+
+
+		if(!$article){
+            throw new \Exception('Undefined article '.$id);
+        }
+
+		return $article;
+
 	}
 }
 

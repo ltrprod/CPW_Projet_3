@@ -1,7 +1,9 @@
 <?php
+
 use App\Model\ArticleManager;
 use App\Model\CommentManager;
 
+require_once('..\Framework\Manager.php');
 require_once('..\Model\ArticleManager.php');
 require_once('..\Model\CommentManager.php');
 

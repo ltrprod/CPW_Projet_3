@@ -8,12 +8,8 @@ class Article{
     private $content=null;
     private $image=null;
 
-    public function __construct($_title, $_author, $_content, $_image){
+    public function __construct(){
 
-        $this->_title=$_title;
-        $this->_author=$_author;
-        $this->_content=$_content;
-        $this->_image=$_image;
     }
 
     // Getters retournent propriétés

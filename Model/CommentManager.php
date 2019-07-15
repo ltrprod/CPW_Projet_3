@@ -1,8 +1,7 @@
 <?php
 
 namespace App\Model;
-use \App\Framework\Manager;
-require_once('..\Framework\Manager.php');
+use App\Framework\Manager;
 
 class CommentManager extends Manager
 {
