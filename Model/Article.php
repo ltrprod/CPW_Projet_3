@@ -7,10 +7,7 @@ class Article{
     private $author=null;
     private $content=null;
     private $image=null;
-
-    public function __construct(){
-
-    }
+    private $date=null;
 
     // Getters retournent propriétés
 
@@ -30,6 +27,10 @@ class Article{
     {
         return $this->image;
     }
+    public function getArticleDate()
+    {
+        return $this->date;
+    }
 
     // setters modifient propriétés
 
@@ -44,6 +45,9 @@ class Article{
     }
     public function setImage($image){
         $this->image=$image;
+    }
+    public function setArticleDate($date){
+        $this->date=$date;
     }
 }
 

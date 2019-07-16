@@ -3,43 +3,35 @@
 namespace App\Model;
 
 class Comment{
-	private $_idArticle=null;
-	private $_alias=null;
-	private $_contentComment=null;
-
-
-	public function __construct( $_idArticle, $_alias, $_contentComment){
-
-		$this->_idArticle=$_idArticle;
-		$this->_alias=$_alias;
-		$this->_contentComment=$_contentComment;
-	}
+	private $idArticle=null;
+	private $alias=null;
+	private $contentComment=null;
 
 	// Getters retournent propriétés
 
 	public function getIdArticle()
 	{
-		return $this->_idArticle;
+		return $this->idArticle;
 	}
 	public function getAlias()
 	{
-		return $this->_alias;
+		return $this->alias;
 	}
 	public function getContentComment()
 	{
-		return $this->_contentComment;
+		return $this->contentComment;
 	}
 
 	// setters modifient propriétés
 
 	public function setIdArticle($idArticle){
-		$this->_idArticle=$idArticle;
+		$this->idArticle=$idArticle;
 	}
 	public function setAlias($alias){
-		$this->_alias=$alias;
+		$this->alias=$alias;
 	}
 	public function setContentComment($contentComment){
-		$this->_contentComment=$contentComment;
+		$this->contentComment=$contentComment;
 	}
 }
 
