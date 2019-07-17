@@ -7,6 +7,6 @@
         </div>
         <div class="col-sm-3 col-md-6">
 			<?php echo substr($data['content'],0,250).'...' ?>
-            <br/><a href="index.php?action=post&amp;id=<?=$data['id']?>">Lire l'article</a>           <!--&amp; = &    -->
+            <br/><a href="index.php?action=articleSolo&amp;id=<?=$data['id']?>">Lire l'article</a>
         </div>
     </div>

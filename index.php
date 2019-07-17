@@ -4,7 +4,7 @@ require_once('View/indexView.php');
 $test=null;
 
 
-if($_GET['action'] == 'post') {
+if(isset($_GET['action']) && $_GET['action'] == 'articleSolo') {
 	if (isset($_GET['id']) && $_GET['id'] > 0) {
 		$id = $_GET['id'];
 		require_once('Controller/articleSoloController.php');
@@ -12,7 +12,7 @@ if($_GET['action'] == 'post') {
 		require('View/articleSoloView.php');
 	}
 	else {
-		throw new Exception('Aucun identifiant de billet envoyé');
+		throw new Exception('Aucun identifiant d\'article envoyé');
 	}
 }
 else{
@@ -20,4 +20,4 @@ else{
 	while ($data = $articlesArray->fetch()) {
 		require('View/articleListView.php');
 	}
-}
+};

@@ -2,7 +2,6 @@
 
 namespace App;
 
-
 spl_autoload_register(function ($class){
 
 	if (preg_match("#^App\\\\#", $class)) {                       // Si $class commence par "App\"
@@ -12,7 +11,3 @@ spl_autoload_register(function ($class){
 		require_once($file);
 	}
 });
-
-function post(){
-	echo 'test';
-};

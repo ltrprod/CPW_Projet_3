@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Framework;
+
 class Manager
 {
 
@@ -8,7 +9,6 @@ class Manager
     {
 
         $db = new \PDO('mysql:host=localhost;dbname=cpwprojet3;charset=utf8', 'root', '');
-        return $db;
+		return $db;
     }
-
 }
