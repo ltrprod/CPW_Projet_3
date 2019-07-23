@@ -1,3 +1,7 @@
+<?php include ('View/header.php'); ?>
+
+<?php
+foreach($articles as $data) : ?>
     <br/><div class="row">
         <div class="col-sm-2 col-md-3">
 		    <?php echo htmlspecialchars($data['title']) ?>
@@ -10,3 +14,5 @@
             <br/><a href="index.php?action=articleSolo&amp;id=<?=$data['id']?>">Lire l'article</a>
         </div>
     </div>
+
+<?php endforeach; ?>

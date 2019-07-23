@@ -2,12 +2,23 @@
 
 namespace App\Model;
 use App\Framework\Manager;
-use mysql_xdevapi\Exception;
 
 
+/**
+ * Class ArticleManager
+ * @package App\Model
+ */
 class ArticleManager extends Manager
 {
-    public function postArticle($title, $author, $content, $image)
+
+    /**
+     * @param string $title
+     * @param string $author
+     * @param string $content
+     * @param string $image
+     * @return bool
+     */
+    public function postArticle(string $title, string $author, string $content, string $image): bool
     {
 		$db = $this->dbConnect();
 		$req = $db->prepare('INSERT INTO article(title, author, content, image) VALUES(:title, :author, :content, :image)');
@@ -15,7 +26,15 @@ class ArticleManager extends Manager
 		return $affectedLines;
     }
 
-    public function modifyArticle($id, $title, $author, $content, $image )
+    /**
+     * @param $id
+     * @param string $title
+     * @param $author
+     * @param $content
+     * @param $image
+     * @return bool
+     */
+    public function modifyArticle($id,$title, $author, $content, $image )
     {
 		$db = $this->dbConnect();
 		$req = $db->prepare('UPDATE article SET title=:title, author=:author, content=:content, image=:image WHERE id=:id ');
@@ -23,6 +42,10 @@ class ArticleManager extends Manager
 		return $affectedLines;
     }
 
+    /**
+     * @param $id
+     * @return bool
+     */
     public function deleteArticle($id)
     {
 		$db = $this->dbConnect();
@@ -31,6 +54,9 @@ class ArticleManager extends Manager
 		return $affectedLines;
     }
 
+    /**
+     * @return bool|\PDOStatement
+     */
     public function getArticles()
     {
         $db = $this->dbConnect();
@@ -39,6 +65,11 @@ class ArticleManager extends Manager
         return $req;
     }
 
+    /**
+     * @param $id
+     * @return Article
+     * @throws \Exception
+     */
     public function getArticle($id): Article
 	{
 		$db = $this->dbConnect();
@@ -53,7 +84,11 @@ class ArticleManager extends Manager
 		return $article;
 	}
 
-	public function getCreationDate($id)
+    /**
+     * @param $id
+     * @return bool|\PDOStatement
+     */
+    public function getCreationDate($id)
 	{
 		$db = $this->dbConnect();
 		$req = $db->prepare('SELECT date FROM article WHERE id=:id');
