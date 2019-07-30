@@ -11,7 +11,7 @@ class Article{
 
     // Getters retournent propriétés
 
-    public function getTitle()
+		public function getTitle()
     {
         return $this->title;
     }

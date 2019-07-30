@@ -6,6 +6,7 @@ class Comment{
 	private $idArticle=null;
 	private $alias=null;
 	private $contentComment=null;
+	private $dateComment=null;
 
 	// Getters retournent propriétés
 
@@ -21,6 +22,10 @@ class Comment{
 	{
 		return $this->contentComment;
 	}
+	public function getDateComment()
+	{
+		return $this->dateComment;
+	}
 
 	// setters modifient propriétés
 
@@ -32,6 +37,9 @@ class Comment{
 	}
 	public function setContentComment($contentComment){
 		$this->contentComment=$contentComment;
+	}
+	public function setDateComment($dateComment){
+		$this->dateComment=$dateComment;
 	}
 }
 
