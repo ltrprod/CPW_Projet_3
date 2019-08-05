@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Framework\Controller;
 use App\Model\ArticleManager;
 use App\Model\CommentManager;
+use App\Controller\CommentCreatorController;
 use Exception;
 
 
@@ -24,13 +25,7 @@ class ArticleSoloController extends Controller
 		$commentManager = new CommentManager();
 		$comments = $commentManager->getComments($id);
 		require('View/articleSoloView.php');
+		require('View/commentCreatorView.php');
 		require('View/commentSoloView.php');
-	}
-
-	function createComment($id)
-	{
-		$id=$idArticle;
-		$commentManager = new CommentManager();
-		$comments = $commentManager->postComment($idArticle, $alias, $contentComment);
 	}
 }

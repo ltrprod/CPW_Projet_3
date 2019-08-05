@@ -11,3 +11,6 @@
         <br/><a href="index.php">Retour aux chapitres</a>
     </div>
 </div>
+<div class="row">
+    <p>Laissez votre commentaire:</p>
+</div>

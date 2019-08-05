@@ -49,5 +49,21 @@ class Article{
     public function setArticleDate($date){
         $this->date=$date;
     }
+
+    public function validate() : array
+    {
+        $errors = [];
+
+        if(strlen($this->title) < 2){
+            $errors[] = "Le titre est trop court (2 caractères minimum)";
+        }
+
+        if(strlen($this->content) < 20){
+            $errors[] = "Le contenu est trop court";
+        }
+
+        return $errors;
+
+    }
 }
 

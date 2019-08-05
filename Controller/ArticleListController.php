@@ -13,6 +13,6 @@ class ArticleListController extends Controller
 	{
 		$articleManager = new ArticleManager();
 		$articlesArray = $articleManager->getArticles();
-		return $articlesArray;
+        require('View/articleListView.php');
 	}
 }

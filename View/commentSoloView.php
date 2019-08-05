@@ -10,6 +10,4 @@ foreach($comments as $data) : ?>
 			<?= $data['content']?>
 		</div>
 	</div>
-
 <?php endforeach; ?>
-</div>

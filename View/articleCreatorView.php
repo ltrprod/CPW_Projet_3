@@ -1,7 +1,16 @@
 <?php include ('View/header.php'); ?>
 <h2>Creez votre article</h2>
 <div class="container">
-<form action="index.php?action=addArticle" method="post">
+    <?php if ($errors): ?>
+    <div class="alert alert-danger">
+        <ul>
+            <?php foreach($errors as $error): ?>
+            <li> <?= $error ?></li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+    <?php endif; ?>
+<form action="" method="post">
     <h3>Title:</h3>
     <input type="text" name="title">
     <h3>Linked image:</h3>

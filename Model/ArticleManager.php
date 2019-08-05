@@ -7,6 +7,14 @@ use App\Framework\Manager;
 class ArticleManager extends Manager
 {
 
+    /**
+     * @param string $title
+     * @param string $author
+     * @param string $content
+     * @param string $image
+     * @return bool
+     * @throws \Exception
+     */
     public function postArticle(string $title, string $author, string $content, string $image): bool
     {
 		$db = $this->dbConnect();
