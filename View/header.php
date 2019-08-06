@@ -13,8 +13,13 @@
 <div class="topnav">
     <a class="active" href="index.php">Home</a>
     <a href="index.php">Chapitres</a>
-    <a href="index.php?action=articleCreator">Creer chapitre</a>
+    <a href="index.php?action=addArticle">Creer chapitre</a>
     <a href="#contact">Contact</a>
     <a href="#about">A propos</a>
 </div>
 <br/><h1>Titre H1 du blog</h1>
+
+<body>
+<?= $content ?>
+</body>
+</html>

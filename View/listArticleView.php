@@ -1,4 +1,4 @@
-<?php include ('View/header.php'); ?>
+<?php ob_start() ?>
 <br/><h2>Titre liste article</h2>
 <div class="container">
 <?php
@@ -12,9 +12,11 @@ foreach($articlesArray as $data) : ?>
         </div>
         <div class="col-sm-3 col-md-6">
 			<?= substr($data['content'],0,250).'...' ?>
-            <br/><a href="index.php?action=articleSolo&amp;id=<?=$data['id']?>">Lire l'article</a>
+            <br/><a href="index.php?action=soloArticle&amp;id=<?=$data['id']?>">Lire l'article</a>
         </div>
     </div>
 
-<?php endforeach; ?>
 
+<?php endforeach;
+$content = ob_get_clean();
+require('View/header.php');

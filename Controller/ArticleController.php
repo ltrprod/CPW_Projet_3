@@ -29,10 +29,8 @@ class ArticleController extends Controller
                 $articlemanager->postArticle($_POST['title'], $_POST['author'], $_POST['content'], $_POST['linked_image']);
                 header('Location: index.php');
             }
-
-
         }
-        require('View/articleCreatorView.php');
+        require('View/addArticleView.php');
     }
 
     function show($id)
@@ -41,16 +39,13 @@ class ArticleController extends Controller
         $article = $articleManager->getArticle($id);
         $commentManager = new CommentManager();
         $comments = $commentManager->getComments($id);
-        require('View/articleSoloView.php');
-        require('View/commentCreatorView.php');
-        require('View/commentSoloView.php');
+        require('View/soloArticleView.php');
     }
 
-    public
-    function list()
+    public function list()
     {
         $articleManager = new ArticleManager();
         $articlesArray = $articleManager->getArticles();
-        require('View/articleListView.php');
+        require('View/listArticleView.php');
     }
 }

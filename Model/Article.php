@@ -58,6 +58,10 @@ class Article{
             $errors[] = "Le titre est trop court (2 caractères minimum)";
         }
 
+        if(strlen($this->author) < 3){
+            $errors[] = "Le nom d'auteur est trop court";
+        }
+
         if(strlen($this->content) < 20){
             $errors[] = "Le contenu est trop court";
         }

@@ -24,7 +24,7 @@ class CommentManager extends Manager
     public function getComments($idArticle)
     {
 		$db = $this->dbConnect();
-		$req = $db->prepare('SELECT id, alias, content, date FROM comment WHERE idArticle=:idArticle ORDER BY date');
+		$req = $db->prepare('SELECT id, alias, content, date FROM comment WHERE idArticle=:idArticle ORDER BY date DESC');
 		$req->execute(array('idArticle'=>$idArticle));
 		return $req;
     }

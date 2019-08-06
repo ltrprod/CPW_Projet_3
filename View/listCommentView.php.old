@@ -1,3 +1,9 @@
+<?php
+ob_start();
+if (isset($content)) {
+    echo $content;
+}
+?>
 <br/><h3>Commentaires</h3>
 <?php
 foreach($comments as $data) : ?>
@@ -10,4 +16,6 @@ foreach($comments as $data) : ?>
 			<?= $data['content']?>
 		</div>
 	</div>
-<?php endforeach; ?>
+<?php endforeach;
+$content = ob_get_clean();
+require ('View/header.php');

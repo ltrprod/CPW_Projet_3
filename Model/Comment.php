@@ -5,8 +5,8 @@ namespace App\Model;
 class Comment{
 	private $idArticle=null;
 	private $alias=null;
-	private $contentComment=null;
-	private $dateComment=null;
+	private $content=null;
+	private $date=null;
 
 	// Getters retournent propriétés
 
@@ -20,11 +20,11 @@ class Comment{
 	}
 	public function getContentComment()
 	{
-		return $this->contentComment;
+		return $this->content;
 	}
 	public function getDateComment()
 	{
-		return $this->dateComment;
+		return $this->date;
 	}
 
 	// setters modifient propriétés
@@ -35,11 +35,28 @@ class Comment{
 	public function setAlias($alias){
 		$this->alias=$alias;
 	}
-	public function setContentComment($contentComment){
-		$this->contentComment=$contentComment;
+	public function setContent($content){
+		$this->content=$content;
 	}
-	public function setDateComment($dateComment){
-		$this->dateComment=$dateComment;
+	public function setDateComment($date){
+		$this->date=$date;
 	}
+
+    public function validate() : array
+    {
+        $errors = [];
+
+        if(strlen($this->alias) < 2){
+            $errors[] = "Le pseudo choisit est trop court (2 caractères minimum)";
+        }
+
+        if(strlen($this->content) < 5){
+            $errors[] = "Le contenu est trop court (5 caractères minimum)";
+        }
+
+        return $errors;
+    }
+
+
 }
 

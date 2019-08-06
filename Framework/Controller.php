@@ -4,5 +4,4 @@ namespace App\Framework;
 
 class Controller{
 
-
 }
