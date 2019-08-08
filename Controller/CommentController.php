@@ -23,6 +23,5 @@ class CommentController extends Controller
                 header('Location: index.php');
 /*            }
         }*/
-
     }
 }

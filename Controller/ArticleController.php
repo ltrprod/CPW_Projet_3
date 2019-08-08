@@ -3,8 +3,11 @@
 namespace App\Controller;
 
 use App\Framework\Controller;
+use App\Framework\View;
 use App\Model\Article;
-use App\Model\ArticleManager;
+use App\Model\ArticleManager;9+
+
+
 use App\Model\CommentManager;
 
 
@@ -12,7 +15,7 @@ class ArticleController extends Controller
 {
     public function create()
     {
-        $errors = "";
+        $errors = [];
 
         if (isset($_POST['author']) && isset($_POST['content']) && isset($_POST['linked_image'])) {
 
@@ -27,10 +30,14 @@ class ArticleController extends Controller
             if (!$errors) {
                 $articlemanager = new ArticleManager();
                 $articlemanager->postArticle($_POST['title'], $_POST['author'], $_POST['content'], $_POST['linked_image']);
-                header('Location: index.php');
+
+                $this->redirect();
+
             }
         }
-        require('View/addArticleView.php');
+
+
+        $this->render("addArticle", ['errors' => $errors]);
     }
 
     function show($id)
@@ -39,7 +46,12 @@ class ArticleController extends Controller
         $article = $articleManager->getArticle($id);
         $commentManager = new CommentManager();
         $comments = $commentManager->getComments($id);
-        require('View/soloArticleView.php');
+
+
+        $this->render("soloArticle", [
+        'article' => $article,
+        'comments' => $comments
+    ]);
     }
 
     public function list()
@@ -48,4 +60,5 @@ class ArticleController extends Controller
         $articlesArray = $articleManager->getArticles();
         require('View/listArticleView.php');
     }
+
 }
