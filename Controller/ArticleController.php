@@ -3,10 +3,9 @@
 namespace App\Controller;
 
 use App\Framework\Controller;
-use App\Framework\View;
 use App\Model\Article;
-use App\Model\ArticleManager;9+
-
+use App\Model\ArticleManager;
+use Exception;
 
 use App\Model\CommentManager;
 
@@ -43,15 +42,18 @@ class ArticleController extends Controller
     function show($id)
     {
         $articleManager = new ArticleManager();
-        $article = $articleManager->getArticle($id);
-        $commentManager = new CommentManager();
-        $comments = $commentManager->getComments($id);
-
-
-        $this->render("soloArticle", [
-        'article' => $article,
-        'comments' => $comments
-    ]);
+        $check = $articleManager -> checkId($id);
+        if (!isset($check)) {
+            (new ErrorController())->error404(' L\'identifiant d\'article est invalide');
+        } else {
+            $article = $articleManager->getArticle($id);
+            $commentManager = new CommentManager();
+            $comments = $commentManager->getComments($id);
+            $this->render("soloArticle", [
+                'article' => $article,
+                'comments' => $comments
+            ]);
+        }
     }
 
     public function list()

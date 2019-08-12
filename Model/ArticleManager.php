@@ -63,5 +63,24 @@ class ArticleManager extends Manager
         }
 		return $article;
 	}
+
+/*	public function maxId()
+    {
+        $db = $this->dbConnect();
+        $req = $db->prepare('SELECT MAX(id) FROM article');
+        $req->execute();
+        $maxId= $req->fetch();
+        $maxId= $maxId['0'];
+        return $maxId;
+    }*/
+
+    public function checkId($id){
+        $db = $this->dbConnect();
+        $req = $db->prepare('SELECT id FROM article WHERE id = :id');
+        $req->execute(array('id'=>$id));
+        $checkId= $req->fetch();
+        $checkId= $checkId['0'];
+        return $checkId;
+    }
 }
 

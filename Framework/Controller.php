@@ -5,16 +5,16 @@ namespace App\Framework;
 class Controller
 {
 
-    public function render(string $view, array $parameters = [], $status = 200)
+    public function render(string $path, array $parameters = [], $status = 200)
     {
         http_response_code($status);
         header('Content-Type: text/html');
 
-        echo View::render($view, $parameters);
+        echo View::render($path, $parameters);
 
     }
 
-    public function redirect($action= null, $parameters = [])
+    public function redirect($action = null, $parameters = [])
     {
 
         $url = (!$action) ? "index.php":"index.php?action=". $action;
@@ -26,4 +26,6 @@ class Controller
         header('Location: '.$url);
 
     }
+
+
 }

@@ -15,8 +15,7 @@ foreach($articlesArray as $data) : ?>
             <br/><a href="index.php?action=soloArticle&amp;id=<?=$data['id']?>">Lire l'article</a>
         </div>
     </div>
-
-
 <?php endforeach;
+
 $content = ob_get_clean();
 require('View/header.php');

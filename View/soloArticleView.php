@@ -23,7 +23,7 @@
         <h4>Alias:</h4>
         <input type="text" name="alias">
         <h4>Content:</h4>
-        <textarea rows="20" cols="100" name="content"></textarea>
+        <textarea rows="10" cols="100" name="content"></textarea>
         <input type="submit" value="Valider">
     </form><br/>
 
@@ -37,8 +37,24 @@ foreach($comments as $data) : ?>
 			<em>par <?= $data['alias'] ?></em>
 			<em>le <?= $data['date'] ?></em>
 		</div>
-		<div class="col-sm-4 col-md-9" style="background-color: #0f6674">
+		<div class="col-sm-4 col-md-7" style="background-color: #0f6674">
 			<?= $data['content']?>
+		</div>
+
+
+<!-- report comment -->
+		<div class="col-sm-2 col-md-2" style="background-color: #86cfda">
+            <form action="index.php?action=reportComment&amp;id=<?= $data['id']?>&amp;" method="post">
+                <div class="form-group">
+                    <label for="exampleFormControlSelect1">Report comment</label>
+                     <select class="form-control" name="reason">
+                        <option value="racism">racism</option>
+                        <option value="sexual content">sexual content</option>
+                        <option value="other">other</option>
+                     </select>
+                </div>
+                <input type="submit" value="Valider">
+            </form><br/>
 		</div>
 	</div>
 <?php endforeach;
