@@ -56,11 +56,46 @@ class ArticleController extends Controller
         }
     }
 
+    function showModify($id)
+    {
+        $articleManager = new ArticleManager();
+        $check = $articleManager -> checkId($id);
+        if (!isset($check)) {
+            (new ErrorController())->error404(' L\'identifiant d\'article est invalide');
+        } else {
+            $article = $articleManager->getArticle($id);
+            $this->render("modifyArticle", ['article' => $article, 'id'=> $id ]);
+        }
+    }
+
     public function list()
     {
         $articleManager = new ArticleManager();
-        $articlesArray = $articleManager->getArticles();
-        require('View/listArticleView.php');
+        $articles = $articleManager->getArticles();
+        $this->render("listArticle", ['articles' => $articles]);
+    }
+
+    public function admin(){
+        $articleManager = new ArticleManager();
+        $articles = $articleManager->getAdminArticles();
+        $this->render("adminOptions", ['articles' => $articles]);
+    }
+
+    public function delete($id){
+        $articleManager = new ArticleManager();
+        $articleManager->deleteArticle($id);
+        $this->redirect('adminOptions');
+
+    }
+
+    public function modify($id){
+        if (isset($_POST['title']) && isset($_POST['author']) && isset($_POST['content']) && isset($_POST['linked_image'])) {
+                $articlemanager = new ArticleManager();
+                $articlemanager->modifyArticle($id, $_POST['title'], $_POST['author'], $_POST['content'], $_POST['linked_image']);
+                $this->redirect('adminOptions');
+        } else {
+            echo('ecrire une erreur');
+        }
     }
 
 }

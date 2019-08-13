@@ -14,7 +14,7 @@
     <a href="index.php">Chapitres</a>
     <a href="index.php?action=addArticle">Creer chapitre</a>
     <a href="index.php?action=listReportedComments">Commentaires signalés</a>
-    <a href="#about">A propos</a>
+    <a href="index.php?action=adminOptions">Admin</a>
 </div>
 <body>
 <?= $content ?>

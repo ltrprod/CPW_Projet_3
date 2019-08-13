@@ -23,15 +23,13 @@ class ArticleManager extends Manager
 		return $affectedLines;
     }
 
-
-    public function modifyArticle($id,$title, $author, $content, $image )
+    public function modifyArticle($id,$title, $author, $content, $image)
     {
-		$db = $this->dbConnect();
-		$req = $db->prepare('UPDATE article SET title=:title, author=:author, content=:content, image=:image WHERE id=:id ');
-		$affectedLines = $req->execute(array('title'=>$title, 'author'=>$author, 'content'=>$content, 'image'=>$image, 'id'=>$id ));
-		return $affectedLines;
+        $db = $this->dbConnect();
+        $req = $db->prepare('UPDATE article SET title=:title, author=:author, content=:content, image=:image WHERE id=:id ');
+        $affectedLines = $req->execute(array('title'=>$title, 'author'=>$author, 'content'=>$content, 'image'=>$image, 'id'=>$id ));
+        return $affectedLines;
     }
-
 
     public function deleteArticle($id)
     {
@@ -45,12 +43,19 @@ class ArticleManager extends Manager
     public function getArticles()
     {
         $db = $this->dbConnect();
-        $req = $db->prepare('SELECT id, title, date, author, content, image FROM article ORDER BY date DESC LIMIT 0, 5');
+        $req = $db->prepare('SELECT id, title, date, author, content, image FROM article ORDER BY date DESC LIMIT 0, 5') ;
         $req->execute();
         $articleArray= $req->fetchAll();
 		return $articleArray;
     }
 
+    public function getAdminArticles(){
+        $db = $this->dbConnect();
+        $req = $db->prepare('SELECT id, title, date, author FROM article ORDER BY date DESC') ;
+        $req->execute();
+        $articleArray= $req->fetchAll();
+        return $articleArray;
+    }
 
     public function getArticle($id): Article
 	{
@@ -64,16 +69,6 @@ class ArticleManager extends Manager
 		return $article;
 	}
 
-/*	public function maxId()
-    {
-        $db = $this->dbConnect();
-        $req = $db->prepare('SELECT MAX(id) FROM article');
-        $req->execute();
-        $maxId= $req->fetch();
-        $maxId= $maxId['0'];
-        return $maxId;
-    }*/
-
     public function checkId($id){
         $db = $this->dbConnect();
         $req = $db->prepare('SELECT id FROM article WHERE id = :id');
@@ -81,6 +76,15 @@ class ArticleManager extends Manager
         $checkId= $req->fetch();
         $checkId= $checkId['0'];
         return $checkId;
+    }
+
+    public function countArticles(){
+        $db = $this->dbConnect();
+        $req = $db->prepare('SELECT id FROM article');
+        $req->execute();
+        $idArray = $req->fetchAll();
+        $count = count($idArray) ;
+        return $count;
     }
 }
 

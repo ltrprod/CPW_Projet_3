@@ -2,7 +2,7 @@
 <br/><h2>Titre liste article</h2>
 <div class="container">
 <?php
-foreach($articlesArray as $data) : ?>
+foreach($articles as $data) : ?>
     <br/><div class="row">
         <div class="col-sm-2 col-md-3">
 		    <?= htmlspecialchars($data['title']) ?>

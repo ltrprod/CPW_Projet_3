@@ -11,3 +11,7 @@ use App\Model\ArticleManager;
 use App\Controller\ErrorController;
 
 Autoloader::run();
+
+$articleManager = new ArticleManager();
+$count=$articleManager->countArticles();
+echo $count;

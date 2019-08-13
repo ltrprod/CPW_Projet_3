@@ -31,6 +31,18 @@ elseif (isset($_GET['action']) && $_GET['action'] == 'addArticle') {
     (new ArticleController())->create();
 }
 
+elseif (isset($_GET['action']) && $_GET['action'] == 'modifyArticle') {
+    if (isset($_GET['id'])) {
+        (new ArticleController())->modify($_GET['id']);
+    }
+}
+
+elseif (isset($_GET['action']) && $_GET['action'] == 'articleModificationForm') {
+    if (isset($_GET['id'])) {
+        (new ArticleController())->showModify($_GET['id']);
+    }
+}
+
 elseif (isset($_GET['action']) && $_GET['action'] == 'addComment') {
     $idArticle = $_GET['idArticle'];
     (new CommentController())->post($idArticle, $_POST['alias'], $_POST['content']);
@@ -60,7 +72,17 @@ elseif (isset($_GET['action']) && $_GET['action'] == 'deleteComment') {
     }
 }
 
+elseif (isset($_GET['action']) && $_GET['action'] == 'deleteArticle') {
+    if (isset($_GET['id'])) {
+        (new ArticleController())->delete($_GET['id']);
+    }
+}
+
+elseif (isset($_GET['action']) && $_GET['action'] == 'adminOptions') {
+    (new ArticleController())->admin();
+}
+
 else {
-    $articlesArray = (new ArticleController())->list();
+    (new ArticleController())->list();
 };
 
