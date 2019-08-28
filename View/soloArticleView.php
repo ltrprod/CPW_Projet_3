@@ -4,8 +4,8 @@
 <div class="container">
     <br/><div class="row">
 	    <div class="col-sm-2 col-md-3">
-            <p><?= $article->getTitle() ?> par <?= $article->getAuthor() ?></p> le <?= $article->getArticleDate() ?></p>
-		    <img src="<?= $article->getImage()?>" alt="image chapitre" width="100px" height="50px">
+            <p><?= htmlspecialchars($article->getTitle()) ?> par <?= htmlspecialchars($article->getAuthor()) ?></p> le <?= htmlspecialchars($article->getArticleDate()) ?></p>
+		    <img src="<?= htmlspecialchars($article->getImage()) ?>" alt="image chapitre" width="100px" height="50px">
 	    </div>
         <div class="col-sm-2 col-md-9">
             <p><?= $article->getArticleContent() ?></p>
@@ -34,11 +34,11 @@
 foreach($comments as $data) : ?>
 	<br/><div class="row">
 		<div class="col-sm-2 col-md-3" style="background-color: #b3b7bb">
-			<em>par <?= $data['alias'] ?></em>
-			<em>le <?= $data['date'] ?></em>
+			<em>par <?= htmlspecialchars($data['alias']) ?></em>
+			<em>le <?= htmlspecialchars($data['date']) ?></em>
 		</div>
 		<div class="col-sm-4 col-md-7" style="background-color: #0f6674">
-			<?= $data['content']?>
+			<?= htmlspecialchars($data['content']) ?>
 		</div>
 
 

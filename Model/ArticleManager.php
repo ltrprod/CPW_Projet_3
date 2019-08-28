@@ -4,8 +4,13 @@ namespace App\Model;
 use App\Framework\Manager;
 
 
+/**
+ * Class ArticleManager
+ * @package App\Model
+ */
 class ArticleManager extends Manager
 {
+    const LIMIT_ARTICLE_PER_PAGE = 5;
 
     /**
      * @param string $title
@@ -23,7 +28,15 @@ class ArticleManager extends Manager
 		return $affectedLines;
     }
 
-    public function modifyArticle($id,$title, $author, $content, $image)
+    /**
+     * @param $id
+     * @param $title
+     * @param $author
+     * @param $content
+     * @param $image
+     * @return bool
+     */
+    public function modifyArticle($id, $title, $author, $content, $image)
     {
         $db = $this->dbConnect();
         $req = $db->prepare('UPDATE article SET title=:title, author=:author, content=:content, image=:image WHERE id=:id ');
@@ -31,24 +44,37 @@ class ArticleManager extends Manager
         return $affectedLines;
     }
 
+    /**
+     * @param $id
+     * @return integer affected lines
+     */
     public function deleteArticle($id)
     {
 		$db = $this->dbConnect();
 		$req = $db->prepare('DELETE FROM article WHERE id=:id');
-		$affectedLines = $req->execute(array('id'=>$id));
-		return $affectedLines;
+		$req->bindValue(':id', $id, \PDO::PARAM_INT);
+        $req->execute();
+        return  $req->rowCount();
     }
 
 
-    public function getArticles()
+    /**
+     * @return array
+     */
+    public function getArticles($page = 1)
     {
         $db = $this->dbConnect();
-        $req = $db->prepare('SELECT id, title, date, author, content, image FROM article ORDER BY date DESC LIMIT 0, 5') ;
+        $req = $db->prepare('SELECT id, title, date, author, content, image FROM article ORDER BY date DESC LIMIT :offset, :limit') ;
+        $req->bindValue(':limit', self::LIMIT_ARTICLE_PER_PAGE, \PDO::PARAM_INT);
+        $req->bindValue(':offset', ($page - 1)*self::LIMIT_ARTICLE_PER_PAGE, \PDO::PARAM_INT);
         $req->execute();
-        $articleArray= $req->fetchAll();
-		return $articleArray;
+
+        return $req->fetchAll();
     }
 
+    /**
+     * @return array
+     */
     public function getAdminArticles(){
         $db = $this->dbConnect();
         $req = $db->prepare('SELECT id, title, date, author FROM article ORDER BY date DESC') ;
@@ -57,6 +83,11 @@ class ArticleManager extends Manager
         return $articleArray;
     }
 
+    /**
+     * @param $id
+     * @return Article
+     * @throws \Exception
+     */
     public function getArticle($id): Article
 	{
 		$db = $this->dbConnect();
@@ -69,15 +100,20 @@ class ArticleManager extends Manager
 		return $article;
 	}
 
+    /**
+     * @param $id
+     * @return mixed
+     */
     public function checkId($id){
         $db = $this->dbConnect();
         $req = $db->prepare('SELECT id FROM article WHERE id = :id');
         $req->execute(array('id'=>$id));
-        $checkId= $req->fetch();
-        $checkId= $checkId['0'];
-        return $checkId;
+        return $req->fetch();
     }
 
+    /**
+     * @return int
+     */
     public function countArticles(){
         $db = $this->dbConnect();
         $req = $db->prepare('SELECT id FROM article');

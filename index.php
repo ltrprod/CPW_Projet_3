@@ -9,11 +9,23 @@ use App\Controller\CommentController;
 use App\Controller\ErrorController;
 use App\Framework\Autoloader;
 use App\Framework\Controller;
+use App\Framework\Exception\NotFoundException;
 use App\Model\ArticleManager;
 use Exception;
 
 Autoloader::run();
+$action = $_GET['action'] ?? 'home';
 
+// TODO revoir implementation avec un switch
+session_start();
+
+$_SESSION['isConnected'] = true;
+
+setcookie("test","ok");
+
+
+
+try{
 
 if (isset($_GET['action']) && $_GET['action'] == 'soloArticle') {
     if (isset($_GET['id'])) {
@@ -85,4 +97,7 @@ elseif (isset($_GET['action']) && $_GET['action'] == 'adminOptions') {
 else {
     (new ArticleController())->list();
 };
+}catch (NotFoundException $e){
+    (new ErrorController())->error404($e->getMessage());
+}
 

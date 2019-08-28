@@ -3,15 +3,35 @@
 namespace App\Controller;
 
 use App\Framework\Controller;
+use App\Framework\Exception\NotFoundException;
 use App\Model\Article;
 use App\Model\ArticleManager;
-use Exception;
-
 use App\Model\CommentManager;
 
 
+/**
+ * Class ArticleController
+ * @package App\Controller
+ */
 class ArticleController extends Controller
 {
+    /**
+     * @var ArticleManager
+     */
+    private $articleManager;
+
+    /**
+     * ArticleController constructor.
+     */
+    public function __construct()
+    {
+        $this->articleManager = new ArticleManager();
+    }
+
+
+    /**
+     * @throws \Exception
+     */
     public function create()
     {
         $errors = [];
@@ -27,8 +47,7 @@ class ArticleController extends Controller
 
             $errors = $article->validate();
             if (!$errors) {
-                $articlemanager = new ArticleManager();
-                $articlemanager->postArticle($_POST['title'], $_POST['author'], $_POST['content'], $_POST['linked_image']);
+                $this->articleManager->postArticle($_POST['title'], $_POST['author'], $_POST['content'], $_POST['linked_image']);
 
                 $this->redirect();
 
@@ -39,60 +58,92 @@ class ArticleController extends Controller
         $this->render("addArticle", ['errors' => $errors]);
     }
 
+    /**
+     * @param $id
+     * @throws NotFoundException
+     */
     function show($id)
     {
-        $articleManager = new ArticleManager();
-        $check = $articleManager -> checkId($id);
-        if (!isset($check)) {
-            (new ErrorController())->error404(' L\'identifiant d\'article est invalide');
-        } else {
-            $article = $articleManager->getArticle($id);
-            $commentManager = new CommentManager();
-            $comments = $commentManager->getComments($id);
-            $this->render("soloArticle", [
-                'article' => $article,
-                'comments' => $comments
-            ]);
+        try {
+            $article = $this->articleManager->getArticle($id);
+        } catch (\Exception $e) {
+            throw new NotFoundException(' L\'identifiant d\'article est invalide');
         }
+        $commentManager = new CommentManager();
+        $comments = $commentManager->getComments($id);
+        $this->render("soloArticle", [
+            'article' => $article,
+            'comments' => $comments
+        ]);
     }
 
+    /**
+     * @param $id
+     * @throws NotFoundException
+     */
     function showModify($id)
     {
-        $articleManager = new ArticleManager();
-        $check = $articleManager -> checkId($id);
-        if (!isset($check)) {
-            (new ErrorController())->error404(' L\'identifiant d\'article est invalide');
-        } else {
-            $article = $articleManager->getArticle($id);
-            $this->render("modifyArticle", ['article' => $article, 'id'=> $id ]);
+        try {
+            $article = $this->articleManager->getArticle($id);
+        } catch (\Exception $e) {
+            throw new NotFoundException(' L\'identifiant d\'article est invalide');
         }
+        $this->render("modifyArticle", ['article' => $article, 'id' => $id]);
+
     }
 
+    /**
+     *
+     */
     public function list()
     {
         $articleManager = new ArticleManager();
-        $articles = $articleManager->getArticles();
+        $page = $_GET['page'] ?? 1 ;
+
+        $articles = $articleManager->getArticles($page);
+
+        if(!count($articles)){
+            throw new NotFoundException("Pas d'autres articles");
+        }
+
         $this->render("listArticle", ['articles' => $articles]);
     }
 
-    public function admin(){
+    /**
+     *
+     */
+    public function admin()
+    {
         $articleManager = new ArticleManager();
         $articles = $articleManager->getAdminArticles();
         $this->render("adminOptions", ['articles' => $articles]);
     }
 
-    public function delete($id){
+    /**
+     * @param $id
+     * @throws NotFoundException
+     */
+    public function delete($id)
+    {
+       if(!$this->articleManager->checkId($id)){
+            throw new NotFoundException(' L\'identifiant d\'article est invalide');
+        }
         $articleManager = new ArticleManager();
         $articleManager->deleteArticle($id);
         $this->redirect('adminOptions');
 
     }
 
-    public function modify($id){
+
+    /**
+     * @param $id
+     */
+    public function modify($id)
+    {
         if (isset($_POST['title']) && isset($_POST['author']) && isset($_POST['content']) && isset($_POST['linked_image'])) {
-                $articlemanager = new ArticleManager();
-                $articlemanager->modifyArticle($id, $_POST['title'], $_POST['author'], $_POST['content'], $_POST['linked_image']);
-                $this->redirect('adminOptions');
+            $articlemanager = new ArticleManager();
+            $articlemanager->modifyArticle($id, $_POST['title'], $_POST['author'], $_POST['content'], $_POST['linked_image']);
+            $this->redirect('adminOptions');
         } else {
             echo('ecrire une erreur');
         }

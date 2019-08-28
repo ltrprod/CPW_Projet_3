@@ -3,14 +3,14 @@
 foreach($comments as $data) :?>
 	<br/><div class="row">
 		<div class="col-sm-2 col-md-3" style="background-color: #b3b7bb">
-			<em>par <?= $data['alias'] ?></em>
-			<em>le <?= $data['date'] ?></em>
+			<em>par <?= htmlspecialchars($data['alias']) ?></em>
+			<em>le <?= htmlspecialchars($data['date']) ?></em>
 
-            <br/><a href="index.php?action=soloArticle&amp;id=<?= $data['idArticle']?>">Article concerné</a>
+            <br/><a href="index.php?action=soloArticle&amp;id=<?= htmlspecialchars($data['idArticle']) ?>">Article concerné</a>
 		</div>
 		<div class="col-sm-4 col-md-7" style="background-color: #0f6674">
-			<?= $data['content']?>
-			<p>Signalé pour : <?= $data['reportReason']?></p>
+			<?= htmlspecialchars($data['content']) ?>
+			<p>Signalé pour : <?= htmlspecialchars($data['reportReason']) ?></p>
 		</div>
 
 

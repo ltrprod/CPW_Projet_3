@@ -6,9 +6,9 @@ foreach($articles as $data) : ?>
     <br/><div class="row">
         <div class="col-sm-2 col-md-3">
 		    <?= htmlspecialchars($data['title']) ?>
-            <br/><em>par <?= $data['author'] ?></em>
-            <br/><em>le <?= $data['date'] ?></em>
-            <img src="<?= $data['image']?>" alt="image chapitre" width="100px" height="50px">
+            <br/><em>par <?= htmlspecialchars($data['author']) ?></em>
+            <br/><em>le <?= htmlspecialchars($data['date']) ?></em>
+            <img src="<?= htmlspecialchars($data['image']) ?>" alt="image chapitre" width="100px" height="50px">
         </div>
         <div class="col-sm-3 col-md-6">
 			<?= substr($data['content'],0,250).'...' ?>

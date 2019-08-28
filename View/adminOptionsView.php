@@ -6,8 +6,8 @@ foreach($articles as $data) : ?>
     <br/><div class="row" style="background-color: #86cfda">
         <div class="col-sm-2 col-md-3">
 		    <?= htmlspecialchars($data['title']) ?>
-            <br/><em>par <?= $data['author'] ?></em>
-            <br/><em>le <?= $data['date'] ?></em>
+            <br/><em>par <?= htmlspecialchars($data['author']) ?></em>
+            <br/><em>le <?= htmlspecialchars($data['date']) ?></em>
         </div>
         <div class="col-sm-3 col-md-3">
             <br/><a href="index.php?action=soloArticle&amp;id=<?=$data['id']?>">Lien vers l'article article</a>
