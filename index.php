@@ -9,6 +9,7 @@ use App\Controller\ArticleController;
 use App\Controller\CommentController;
 use App\Controller\ErrorController;
 use App\Framework\Autoloader;
+use App\Framework\Exception\CSRFException;
 use App\Framework\Exception\NeedAuthenticationException;
 use App\Framework\Exception\NotFoundException;
 use Exception;
@@ -97,5 +98,7 @@ try{
     (new ErrorController())->error($e->getMessage(), 404);
 }catch(NeedAuthenticationException $e){
     (new ErrorController())->error($e->getMessage(),401);
+}catch(CSRFException $e){
+    (new ErrorController())->error($e->getMessage(),400);
 }
 

@@ -13,7 +13,7 @@ class AdminManager extends Manager
         $req->execute(array('user' => $user));
         $dataArray = $req->fetch();
         $dataString = $dataArray[0];
-        $dataString = password_hash($dataString,PASSWORD_BCRYPT);
+       // $dataString = password_hash($dataString,PASSWORD_BCRYPT);
         return $dataString;
     }
 

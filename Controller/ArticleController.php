@@ -35,26 +35,25 @@ class ArticleController extends Controller
      */
     public function create()
     {
+        $this->checkIsConnected();
         $errors = [];
-        if($this->checkToken()) {
-            if (isset($_POST['author']) && isset($_POST['content']) && isset($_POST['linked_image'])) {
+        if (isset($_POST['author']) && isset($_POST['content']) && isset($_POST['linked_image'])) {
 
 
-                $article = new Article();
-                $article->setTitle($_POST['title']);
-                $article->setAuthor($_POST['author']);
-                $article->setImage($_POST['linked_image']);
-                $article->setArticleContent($_POST['content']);
+            $this->checkToken();
 
-                $errors = $article->validate();
-                if (!$errors) {
-                    $this->articleManager->postArticle($_POST['title'], $_POST['author'], $_POST['content'], $_POST['linked_image']);
-                    $this->redirect();
+            $article = new Article();
+            $article->setTitle($_POST['title']);
+            $article->setAuthor($_POST['author']);
+            $article->setImage($_POST['linked_image']);
+            $article->setArticleContent($_POST['content']);
 
-                }
+            $errors = $article->validate();
+            if (!$errors) {
+                $this->articleManager->postArticle($_POST['title'], $_POST['author'], $_POST['content'], $_POST['linked_image']);
+                $this->redirect();
+
             }
-        } else{
-            throw new NeedAuthenticationException('Identification de l\'utilisateur échouée');
         }
         $this->render("addArticle", ['errors' => $errors]);
     }
@@ -99,11 +98,11 @@ class ArticleController extends Controller
     public function list()
     {
         $articleManager = new ArticleManager();
-        $page = $_GET['page'] ?? 1 ;
+        $page = $_GET['page'] ?? 1;
 
         $articles = $articleManager->getArticles($page);
 
-        if(!count($articles)){
+        if (!count($articles)) {
             throw new NotFoundException("Pas d'autres articles");
         }
 
@@ -126,16 +125,16 @@ class ArticleController extends Controller
      */
     public function delete($id)
     {
-       if(!$this->articleManager->checkId($id)){
+        if (!$this->articleManager->checkId($id)) {
             throw new NotFoundException(' L\'identifiant d\'article est invalide');
         }
-       if($this->checkToken()) {
-           $articleManager = new ArticleManager();
-           $articleManager->deleteArticle($id);
-           $this->redirect('adminOptions');
-       } else {
-           throw new NeedAuthenticationException('Identification de l\'utilisateur échouée');
-       }
+        if ($this->checkToken()) {
+            $articleManager = new ArticleManager();
+            $articleManager->deleteArticle($id);
+            $this->redirect('adminOptions');
+        } else {
+            throw new NeedAuthenticationException('Identification de l\'utilisateur échouée');
+        }
 
     }
 

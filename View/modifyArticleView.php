@@ -10,7 +10,7 @@
         <h3>Author:</h3>
         <input type="text" name="author" value="<?= $article->getAuthor() ?>">
         <h3>Content:</h3>
-        <textarea rows="20" cols="100" name="content"><?= $article->getArticleContent()?></textarea>
+        <textarea class="editor" rows="20" cols="100" name="content"><?= $article->getArticleContent()?></textarea>
         <input type="submit" value="Valider">
         <input type="hidden" name="token" id="token" value="<?php echo $_SESSION['token']; ?>" />
 
@@ -21,7 +21,8 @@
             <a href="index.php?action=modifyArticle">Retour au menu</a>
         </div>
     </div>
-
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>tinymce.init({selector:'textarea.editor'});</script>
 <?php
 $content = ob_get_clean();
 require('View/header.php');

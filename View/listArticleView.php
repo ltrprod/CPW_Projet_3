@@ -11,7 +11,7 @@ foreach($articles as $data) : ?>
             <img src="<?= htmlspecialchars($data['image']) ?>" alt="image chapitre" width="100px" height="50px">
         </div>
         <div class="col-sm-3 col-md-6">
-			<?= substr($data['content'],0,250).'...' ?>
+			<?= substr(strip_tags($data['content']),0,250).'...' ?>
             <br/><a href="index.php?action=soloArticle&amp;id=<?=$data['id']?>">Lire l'article</a>
         </div>
     </div>

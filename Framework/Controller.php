@@ -2,6 +2,7 @@
 
 namespace App\Framework;
 
+use App\Framework\Exception\CSRFException;
 use App\Framework\Exception\NeedAuthenticationException;
 
 class Controller
@@ -51,9 +52,15 @@ class Controller
 
     public function checkToken()
     {
+        $submitedToken = $_POST['token'] ?? null;
+        if(!$submitedToken){
+            throw new CSRFException();
+        }
+
+
         if (isset($_SESSION['token']) && (isset($_GET['token']) || isset($_POST['token'])))
         {
-            if ($_SESSION['token'] == ($_GET['token']) || $_POST['token']){
+            if ($_SESSION['token'] == $_GET['token'] || $_POST['token']){
                 return true;
             } else {
                 throw  new NeedAuthenticationException();

@@ -23,7 +23,6 @@
     }
     ?>
 </div>
-<body>
 <?= $content ?>
 </body>
 </html>

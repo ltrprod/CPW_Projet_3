@@ -1,8 +1,5 @@
 <?php ob_start() ?>
-<head>
-    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
-    <script>tinymce.init({selector:'textarea'});</script>
-</head>
+
     <h2>Creez votre article</h2>
     <div class="container">
 <?php if ($errors): ?>
@@ -22,7 +19,7 @@
         <h3>Author:</h3>
         <input type="text" name="author">
         <h3>Content:</h3>
-        <textarea rows="20" cols="100" name="content"></textarea>
+        <textarea class="editor" rows="20" cols="100" name="content"></textarea>
         <input type="submit" value="Valider">
     </form>
     <div class="row">
@@ -30,7 +27,8 @@
             <a href="index.php">Retour au menu</a>
         </div>
     </div>
-
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>tinymce.init({selector:'textarea.editor'});</script>
 <?php
 $content = ob_get_clean();
 require('View/header.php');
