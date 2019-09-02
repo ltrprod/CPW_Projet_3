@@ -2,6 +2,8 @@
 
 namespace App\Framework;
 
+use App\Framework\Exception\NeedAuthenticationException;
+
 class Controller
 {
 
@@ -28,4 +30,34 @@ class Controller
     }
 
 
+    /**
+     * @return bool
+     * @throws NeedAuthenticationException
+     */
+    public function checkIsConnected()
+    {
+        if(isset($_SESSION['isConnected'])){
+            return true;
+        }
+        throw  new NeedAuthenticationException();
+    }
+
+    public function checkIsConnectedNavbar()
+    {
+        if(isset($_SESSION['isConnected'])){
+            return true;
+        }
+    }
+
+    public function checkToken()
+    {
+        if (isset($_SESSION['token']) && (isset($_GET['token']) || isset($_POST['token'])))
+        {
+            if ($_SESSION['token'] == ($_GET['token']) || $_POST['token']){
+                return true;
+            } else {
+                throw  new NeedAuthenticationException();
+            }
+        } throw  new NeedAuthenticationException();
+    }
 }

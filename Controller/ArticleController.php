@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Framework\Controller;
+use App\Framework\Exception\NeedAuthenticationException;
 use App\Framework\Exception\NotFoundException;
 use App\Model\Article;
 use App\Model\ArticleManager;
@@ -35,26 +36,26 @@ class ArticleController extends Controller
     public function create()
     {
         $errors = [];
+        if($this->checkToken()) {
+            if (isset($_POST['author']) && isset($_POST['content']) && isset($_POST['linked_image'])) {
 
-        if (isset($_POST['author']) && isset($_POST['content']) && isset($_POST['linked_image'])) {
 
+                $article = new Article();
+                $article->setTitle($_POST['title']);
+                $article->setAuthor($_POST['author']);
+                $article->setImage($_POST['linked_image']);
+                $article->setArticleContent($_POST['content']);
 
-            $article = new Article();
-            $article->setTitle($_POST['title']);
-            $article->setAuthor($_POST['author']);
-            $article->setImage($_POST['linked_image']);
-            $article->setArticleContent($_POST['content']);
+                $errors = $article->validate();
+                if (!$errors) {
+                    $this->articleManager->postArticle($_POST['title'], $_POST['author'], $_POST['content'], $_POST['linked_image']);
+                    $this->redirect();
 
-            $errors = $article->validate();
-            if (!$errors) {
-                $this->articleManager->postArticle($_POST['title'], $_POST['author'], $_POST['content'], $_POST['linked_image']);
-
-                $this->redirect();
-
+                }
             }
+        } else{
+            throw new NeedAuthenticationException('Identification de l\'utilisateur échouée');
         }
-
-
         $this->render("addArticle", ['errors' => $errors]);
     }
 
@@ -112,11 +113,11 @@ class ArticleController extends Controller
     /**
      *
      */
-    public function admin()
+    public function adminArticlePanel()
     {
         $articleManager = new ArticleManager();
         $articles = $articleManager->getAdminArticles();
-        $this->render("adminOptions", ['articles' => $articles]);
+        $this->render("adminArticlePanel", ['articles' => $articles]);
     }
 
     /**
@@ -128,9 +129,13 @@ class ArticleController extends Controller
        if(!$this->articleManager->checkId($id)){
             throw new NotFoundException(' L\'identifiant d\'article est invalide');
         }
-        $articleManager = new ArticleManager();
-        $articleManager->deleteArticle($id);
-        $this->redirect('adminOptions');
+       if($this->checkToken()) {
+           $articleManager = new ArticleManager();
+           $articleManager->deleteArticle($id);
+           $this->redirect('adminOptions');
+       } else {
+           throw new NeedAuthenticationException('Identification de l\'utilisateur échouée');
+       }
 
     }
 
@@ -143,9 +148,9 @@ class ArticleController extends Controller
         if (isset($_POST['title']) && isset($_POST['author']) && isset($_POST['content']) && isset($_POST['linked_image'])) {
             $articlemanager = new ArticleManager();
             $articlemanager->modifyArticle($id, $_POST['title'], $_POST['author'], $_POST['content'], $_POST['linked_image']);
-            $this->redirect('adminOptions');
+            $this->redirect('adminPanel');
         } else {
-            echo('ecrire une erreur');
+            throw new NotFoundException('Les champs ne sont pas remplis correctement');
         }
     }
 

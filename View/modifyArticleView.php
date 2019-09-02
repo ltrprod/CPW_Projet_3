@@ -12,6 +12,7 @@
         <h3>Content:</h3>
         <textarea rows="20" cols="100" name="content"><?= $article->getArticleContent()?></textarea>
         <input type="submit" value="Valider">
+        <input type="hidden" name="token" id="token" value="<?php echo $_SESSION['token']; ?>" />
 
 
     </form>
