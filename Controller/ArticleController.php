@@ -3,11 +3,14 @@
 namespace App\Controller;
 
 use App\Framework\Controller;
+use App\Controller\AdminController;
+use App\Framework\Exception\CSRFException;
 use App\Framework\Exception\NeedAuthenticationException;
 use App\Framework\Exception\NotFoundException;
 use App\Model\Article;
 use App\Model\ArticleManager;
 use App\Model\CommentManager;
+use Exception;
 
 
 /**
@@ -31,17 +34,14 @@ class ArticleController extends Controller
 
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function create()
     {
         $this->checkIsConnected();
         $errors = [];
         if (isset($_POST['author']) && isset($_POST['content']) && isset($_POST['linked_image'])) {
-
-
             $this->checkToken();
-
             $article = new Article();
             $article->setTitle($_POST['title']);
             $article->setAuthor($_POST['author']);
@@ -66,7 +66,7 @@ class ArticleController extends Controller
     {
         try {
             $article = $this->articleManager->getArticle($id);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw new NotFoundException(' L\'identifiant d\'article est invalide');
         }
         $commentManager = new CommentManager();
@@ -85,7 +85,7 @@ class ArticleController extends Controller
     {
         try {
             $article = $this->articleManager->getArticle($id);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw new NotFoundException(' L\'identifiant d\'article est invalide');
         }
         $this->render("modifyArticle", ['article' => $article, 'id' => $id]);
@@ -121,7 +121,9 @@ class ArticleController extends Controller
 
     /**
      * @param $id
+     * @throws NeedAuthenticationException
      * @throws NotFoundException
+     * @throws CSRFException
      */
     public function delete($id)
     {
@@ -131,25 +133,26 @@ class ArticleController extends Controller
         if ($this->checkToken()) {
             $articleManager = new ArticleManager();
             $articleManager->deleteArticle($id);
-            $this->redirect('adminOptions');
+            $this->redirect('adminArticlePanel');
         } else {
             throw new NeedAuthenticationException('Identification de l\'utilisateur échouée');
         }
 
     }
 
-
     /**
      * @param $id
+     * @throws Exception
      */
     public function modify($id)
     {
         if (isset($_POST['title']) && isset($_POST['author']) && isset($_POST['content']) && isset($_POST['linked_image'])) {
+            $this->checkToken();
             $articlemanager = new ArticleManager();
             $articlemanager->modifyArticle($id, $_POST['title'], $_POST['author'], $_POST['content'], $_POST['linked_image']);
             $this->redirect('adminPanel');
         } else {
-            throw new NotFoundException('Les champs ne sont pas remplis correctement');
+            throw new Exception('Les champs ne sont pas remplis correctement');
         }
     }
 

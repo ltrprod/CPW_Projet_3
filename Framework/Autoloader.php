@@ -1,15 +1,20 @@
 <?php
 
-
 namespace App\Framework;
 
 
+/**
+ * Class Autoloader
+ * @package App\Framework
+ */
 class Autoloader
 {
-
+    /**
+     *
+     */
     static public function run()
     {
-        spl_autoload_register(function ($class){
+        spl_autoload_register(function ($class) {
 
             if (preg_match("#^App\\\\#", $class)) {                       // Si $class commence par "App\"
                 $file = str_replace('App\\', '', $class);          // chercher dans $class "App\" et remplacer par "../"
@@ -19,6 +24,4 @@ class Autoloader
             }
         });
     }
-
-
 }

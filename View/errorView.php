@@ -1,6 +1,7 @@
 <?php ob_start();
 if ($parameters):?>
-    <br/><div>
+    <br/>
+    <div>
         <ul>
             <?php foreach ($parameters as $data): ?>
                 <li> <?= $data ?></li>
@@ -12,5 +13,5 @@ if ($parameters):?>
         <a href="index.php">Retourner à la page d'accueil</a>
     </div>
 <?php
-    $content = ob_get_clean();
-    require('View/header.php');
+$content = ob_get_clean();
+require('View/header.php');

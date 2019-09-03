@@ -1,7 +1,7 @@
 <?php ob_start() ?>
 
 <?php
-if($errors){ ?>
+if ($errors) { ?>
     <div class="alert alert-danger">
         <ul>
             <?php foreach ($errors as $error): ?>
@@ -15,7 +15,7 @@ if($errors){ ?>
             <h3>Utilisateur</h3>
             <input type="text" name="user">
             <h3>Mot de passe</h3>
-            <input type="text" name="password">
+            <input type="password" name="password">
             <input type="submit" value="Valider">
         </form>
     </div>

@@ -1,7 +1,15 @@
 <?php
+
 namespace App\Framework\Exception;
 
-class NotFoundException extends \Exception
+use Exception;
+
+
+/**
+ * Class NotFoundException
+ * @package App\Framework\Exception
+ */
+class NotFoundException extends Exception
 {
 
 }

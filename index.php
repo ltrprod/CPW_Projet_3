@@ -15,11 +15,10 @@ use App\Framework\Exception\NotFoundException;
 use Exception;
 
 Autoloader::run();
-$action = $_GET['action'] ?? 'home';
 session_start();
-
-try{
-    switch ($action){
+$action = $_GET['action'] ?? 'home';
+try {
+    switch ($action) {
         case "home":
             (new ArticleController())->list();
             break;
@@ -45,7 +44,8 @@ try{
                 (new ArticleController())->show($_GET['id']);
             } else {
                 throw new Exception('Aucun identifiant d\'article envoyé');
-            } break;
+            }
+            break;
 
         case "addArticle":
             (new ArticleController())->create();
@@ -54,51 +54,58 @@ try{
         case "modifyArticle":
             if (isset($_GET['id'])) {
                 (new ArticleController())->modify($_GET['id']);
-            } break;
+            }
+            break;
 
         case "deleteArticle":
-            echo ('deleteArticle');
+            if (isset($_GET['id'])) {
+                (new ArticleController())->delete($_GET['id']);
+            }
             break;
 
         case "articleModificationForm":
             if (isset($_GET['id'])) {
                 (new ArticleController())->showModify($_GET['id']);
-            } break;
+            }
+            break;
 
         case "addComment":
             (new CommentController())->post($_GET['idArticle'], $_POST['alias'], $_POST['content']);
             break;
 
         case "listReportedComments":
-            (new CommentController())->showReported() ;
+            (new CommentController())->showReported();
             break;
 
         case "reportComment":
             if (isset($_GET['id'])) {
-                if (isset($_POST['reason'])){
-                    (new CommentController())->report($_GET['id'],$_POST['reason'] );
-                } else{
+                if (isset($_POST['reason'])) {
+                    (new CommentController())->report($_GET['id'], $_POST['reason']);
+                } else {
                     throw new Exception('Aucune raison selectionnée pour pouvoir signaler le commentaire');
                 }
             } else {
                 throw new Exception('Aucun identifiant de commentaire envoyé');
-            } break;
+            }
+            break;
 
         case "unReportComment":
             if (isset($_GET['id'])) {
                 (new CommentController())->unReport($_GET['id']);
-            } break;
+            }
+            break;
 
         case "deleteComment":
             if (isset($_GET['id'])) {
                 (new CommentController())->delete($_GET['id']);
-            } break;
+            }
+            break;
     }
-}catch (NotFoundException $e){
+} catch (NotFoundException $e) {
     (new ErrorController())->error($e->getMessage(), 404);
-}catch(NeedAuthenticationException $e){
-    (new ErrorController())->error($e->getMessage(),401);
-}catch(CSRFException $e){
-    (new ErrorController())->error($e->getMessage(),400);
+} catch (NeedAuthenticationException $e) {
+    (new ErrorController())->error($e->getMessage(), 401);
+} catch (CSRFException $e) {
+    (new ErrorController())->error($e->getMessage(), 400);
 }
 

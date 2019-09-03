@@ -3,8 +3,9 @@
 namespace App\Controller;
 
 use App\Framework\Controller;
-use App\Framework\Exception\NotFoundException;
+use App\Framework\Exception\NeedAuthenticationException;
 use App\Model\AdminManager;
+
 
 /**
  * Class AdminController
@@ -25,7 +26,33 @@ class AdminController extends Controller
         $this->adminManager = new AdminManager();
     }
 
+    /**
+     *
+     */
+    public function login()
+    {
+        $errors = [];
+        if (isset($_POST['user']) && isset($_POST['password'])) {
+            $error = $this->checkUser($_POST['user']);
+            if (!$error) {
+                $error = $this->checkPass($_POST['user'], $_POST['password']);
+            }
+            if (!$error) {
+                $_SESSION['isConnected'] = $_POST['user'];
+                $token = md5(bin2hex(openssl_random_pseudo_bytes(6)));
+                $_SESSION['token'] = $token;
+                return $this->redirect('adminPanel');
+            } else {
+                $errors[] = $error;
+            }
+        }
+        $this->render('adminLogin', ['errors' => $errors]);
+    }
 
+    /**
+     * @param $user
+     * @return string|null
+     */
     public function checkUser($user)
     {
         $errorString = null;
@@ -35,6 +62,11 @@ class AdminController extends Controller
         return $errorString;
     }
 
+    /**
+     * @param $user
+     * @param $password
+     * @return string|null
+     */
     public function checkPass($user, $password)
     {
         $errorString = null;
@@ -46,41 +78,29 @@ class AdminController extends Controller
         return $errorString;
     }
 
-    public function login(){
-        $errors = [];
-        if(isset($_POST['user'])&& isset($_POST['password'])){
-            $error = $this->checkUser($_POST['user']);
-            if(!$error) {
-                $error = $this->checkPass($_POST['user'], $_POST['password']);
-            }
-            if(!$error){
-                $_SESSION['isConnected'] = $_POST['user'];
-                $token = md5(bin2hex(openssl_random_pseudo_bytes(6)));
-                $_SESSION['token'] = $token;
-                return $this->redirect('adminPanel');
-            }else{
-                $errors[] = $error;
-            }
-        }
-        $this->render('adminLogin',['errors' => $errors] );
-    }
-
+    /**
+     * @throws NeedAuthenticationException
+     */
     public function adminPanel()
     {
         $this->checkIsConnected();
         $this->render('adminPanel');
     }
 
-    public function logout(){
-        if($this->checkIsConnected()){
+    /**
+     * @throws NeedAuthenticationException
+     */
+    public function logout()
+    {
+        if ($this->checkIsConnected()) {
             unset($_SESSION['isConnected']);
             $error = 'Vous vous êtes déconnecté avec succès.';
             $errors[] = $error;
-        } else{
+        } else {
             $error = 'Vous devez vous connecté pour pouvoir vous deconnecter.';
             $errors[] = $error;
         }
-        $this->render('adminLogin',['errors' => $errors] );;
+        $this->render('adminLogin', ['errors' => $errors]);;
     }
 
 }

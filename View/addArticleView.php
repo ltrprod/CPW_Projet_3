@@ -28,7 +28,7 @@
         </div>
     </div>
     <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
-    <script>tinymce.init({selector:'textarea.editor'});</script>
+    <script>tinymce.init({selector: 'textarea.editor'});</script>
 <?php
 $content = ob_get_clean();
 require('View/header.php');

@@ -14,7 +14,7 @@ foreach($articles as $data) : ?>
         </div>
         <div class="col-sm-3 col-md-3">
             <br/>
-            <form action="index.php?action=deleteArticle&id=<?= $data['id']?>" method="post">
+            <form action="index.php?action=deleteArticle&amp;id=<?= $data['id']?>" method="post">
                 <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
                 <input type="submit" value="Supprimer (définitif)">
             </form>
