@@ -19,7 +19,12 @@ session_start();
 $action = $_GET['action'] ?? 'home';
 try {
     switch ($action) {
+
         case "home":
+            (new ArticleController())->list();
+            break;
+
+        case "listArticle":
             (new ArticleController())->list();
             break;
 
@@ -48,8 +53,13 @@ try {
             break;
 
         case "addArticle":
+            (new ArticleController())->addArticle();
+            break;
+
+        case "createArticle":
             (new ArticleController())->create();
             break;
+
 
         case "modifyArticle":
             if (isset($_GET['id'])) {
@@ -79,8 +89,8 @@ try {
 
         case "reportComment":
             if (isset($_GET['id'])) {
-                if (isset($_POST['reason'])) {
-                    (new CommentController())->report($_GET['id'], $_POST['reason']);
+                if (isset($_POST['reason'])){
+                    (new CommentController())->report($_GET['id'], $_POST['reason'], $_POST['idArticle']);
                 } else {
                     throw new Exception('Aucune raison selectionnée pour pouvoir signaler le commentaire');
                 }

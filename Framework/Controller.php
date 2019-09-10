@@ -51,8 +51,9 @@ class Controller
     {
         if (isset($_SESSION['isConnected'])) {
             return true;
+        } else {
+            throw new NeedAuthenticationException();
         }
-        throw  new NeedAuthenticationException();
     }
 
     /**
@@ -68,7 +69,6 @@ class Controller
     /**
      * @return bool
      * @throws CSRFException
-     * @throws NeedAuthenticationException
      */
     public function checkToken()
     {
@@ -76,13 +76,13 @@ class Controller
         if (!$submitedToken) {
             throw new CSRFException();
         }
-        if (isset($_SESSION['token']) && (isset($_GET['token']) || isset($_POST['token']))) {
-            if ($_SESSION['token'] == $_GET['token'] || $_POST['token']) {
+        if (isset($_SESSION['token']) && (isset($_POST['token']))) {
+            if ($_SESSION['token'] == $_POST['token']) {
                 return true;
             } else {
-                throw  new NeedAuthenticationException();
+                throw  new CSRFException();
             }
         }
-        throw  new NeedAuthenticationException();
+        throw  new CSRFException();
     }
 }

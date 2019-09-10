@@ -28,24 +28,25 @@ class CommentController extends Controller
      * @param $id
      * @param $reason
      */
-    public function report($id, $reason)
+    public function report($id, $reason, $idArticle)
     {
         $commentManager = new CommentManager();
         $commentManager->reportComment($id, $reason);
-        (new Controller())->redirect();
+        $redirect =  'soloArticle&id='.$idArticle;
+        (new Controller())->redirect($redirect);
     }
 
     /**
      * @param $id
      * @throws \App\Framework\Exception\CSRFException
-     * @throws \App\Framework\Exception\NeedAuthenticationException
      */
     public function unReport($id)
     {
-        $this->checkToken();
-        $commentManager = new CommentManager();
-        $commentManager->unReportComment($id);
-        (new Controller())->redirect('listReportedComments');
+        if ($this->checkToken()) {
+            $commentManager = new CommentManager();
+            $commentManager->unReportComment($id);
+            (new Controller())->redirect('listReportedComments');
+        }
     }
 
     /**
@@ -53,7 +54,6 @@ class CommentController extends Controller
      */
     public function showReported()
     {
-        $this->checkToken();
         $commentManager = new CommentManager();
         $comments = $commentManager->getReportedComments();
         $this->render("listReportedComments", [
@@ -64,14 +64,13 @@ class CommentController extends Controller
     /**
      * @param $id
      * @throws \App\Framework\Exception\CSRFException
-     * @throws \App\Framework\Exception\NeedAuthenticationException
      */
     public function delete($id)
     {
-        $this->checkToken();
-        $commentManager = new CommentManager();
-        $commentManager->deleteReported($id);
-        (new Controller())->redirect('listReportedComments');
-
+        if ($this->checkToken()) {
+            $commentManager = new CommentManager();
+            $commentManager->deleteReported($id);
+            (new Controller())->redirect('listReportedComments');
+        }
     }
 }

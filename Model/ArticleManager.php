@@ -13,7 +13,10 @@ use PDO;
  */
 class ArticleManager extends Manager
 {
-    const LIMIT_ARTICLE_PER_PAGE = 5;
+    /**
+     *
+     */
+    const LIMIT_ARTICLE_PER_PAGE = 6;
 
     /**
      * @param string $title
@@ -64,14 +67,13 @@ class ArticleManager extends Manager
     /**
      * @return array
      */
-    public function getArticles($page = 1)
+    public function getArticles($page)
     {
         $db = $this->dbConnect();
         $req = $db->prepare('SELECT id, title, date, author, content, image FROM article ORDER BY date DESC LIMIT :offset, :limit');
         $req->bindValue(':limit', self::LIMIT_ARTICLE_PER_PAGE, PDO::PARAM_INT);
-        $req->bindValue(':offset', ($page - 1) * self::LIMIT_ARTICLE_PER_PAGE, PDO::PARAM_INT);
+        $req->bindValue(':offset', ($page-1) * self::LIMIT_ARTICLE_PER_PAGE, PDO::PARAM_INT);
         $req->execute();
-
         return $req->fetchAll();
     }
 
@@ -95,7 +97,7 @@ class ArticleManager extends Manager
     public function getArticle($id): Article
     {
         $db = $this->dbConnect();
-        $req = $db->prepare('SELECT title, date, author, content, image FROM article WHERE id = :id');
+        $req = $db->prepare('SELECT id, title, date, author, content, image FROM article WHERE id = :id');
         $req->execute(array('id' => $id));
         $article = $req->fetchObject(Article::class);
         if (!$article) {
@@ -116,17 +118,16 @@ class ArticleManager extends Manager
         return $req->fetch();
     }
 
-    /**
-     * @return int
-     */
-    public function countArticles()
+    public function countArticles(): int
     {
         $db = $this->dbConnect();
-        $req = $db->prepare('SELECT id FROM article');
+        $req = $db->prepare('SELECT COUNT(id) FROM article');
         $req->execute();
-        $idArray = $req->fetchAll();
-        $count = count($idArray);
-        return $count;
+        $array[] = $req->fetch();
+        // $array = $array[0][0];
+//        $array = $array[0];
+        return $array[0][0];
     }
+
 }
 

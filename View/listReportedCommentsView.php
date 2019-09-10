@@ -1,33 +1,40 @@
-<h3>Commentaires signalés</h3>
+<div class="container">
+    <br/>
+    <h3>Commentaires signalés</h3>
 <?php
 foreach ($comments as $data) :?>
     <br/>
-    <div class="row">
-        <div class="col-sm-2 col-md-3" style="background-color: #b3b7bb">
-            <em>par <?= htmlspecialchars($data['alias']) ?></em>
-            <em>le <?= htmlspecialchars($data['date']) ?></em>
-
-            <br/><a href="index.php?action=soloArticle&amp;id=<?= htmlspecialchars($data['idArticle']) ?>">Article
+    <div class="row border shadow-lg ">
+        <div class="col-sm-4 col-md-4 " >
+            <p>Posté par : <em><?= htmlspecialchars($data['alias']) ?></em></p>
+            <p>Publié le : <em><?= htmlspecialchars($data['date']) ?></em></p>
+            <a href="index.php?action=soloArticle&amp;id=<?= htmlspecialchars($data['idArticle']) ?>">Article
                 concerné</a>
         </div>
-        <div class="col-sm-4 col-md-7" style="background-color: #0f6674">
-            <?= htmlspecialchars($data['content']) ?>
-            <p>Signalé pour : <?= htmlspecialchars($data['reportReason']) ?></p>
+        <div class="col-sm-6 col-md-6" >
+            <p>Contenu : <em>"<?= htmlspecialchars($data['content']) ?>"</em></p>
+            <p>Signalé pour : <em><?= htmlspecialchars($data['reportReason']) ?></em></p>
         </div>
 
 
         <!-- report comment -->
-        <div class="col-sm-2 col-md-2" style="background-color: #86cfda">
-            <form action="index.php?action=unReportComment&amp;id=<?= $data['id'] ?>" method="post">
-                <input type="submit" value="Rétablir">
+        <div class="col-sm-1 col-md-1" >
+            <form style="margin-top: 15px;" action="index.php?action=unReportComment&amp;id=<?= $data['id'] ?>" method="post">
+                <input class="btn btn-sm btn-outline-secondary" type="submit" value="Rétablir">
+                <input type="hidden" name="token" id="token" value="<?php echo $_SESSION['token']; ?>"/>
             </form>
-            <br/>
-            <form action="index.php?action=deleteComment&amp;id=<?= $data['id'] ?>" method="post">
-                <input type="submit" value="Supprimer (définitif)">
+            <form style="margin-top: 15px;" action="index.php?action=deleteComment&amp;id=<?= $data['id'] ?>" method="post">
+                <input class="btn btn-sm btn-outline-secondary" type="submit" value="Supprimer (définitif)">
+                <input type="hidden" name="token" id="token" value="<?php echo $_SESSION['token']; ?>"/>
             </form>
             <br/>
         </div>
     </div>
-<?php endforeach;
-$content = ob_get_clean();
-require('View/header.php');
+
+<?php endforeach; ?>
+</div>
+
+
+<?php
+    $content = ob_get_clean();
+    require('View/header.php');

@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Framework\Controller;
-use App\Controller\AdminController;
 use App\Framework\Exception\CSRFException;
 use App\Framework\Exception\NeedAuthenticationException;
 use App\Framework\Exception\NotFoundException;
@@ -38,24 +37,30 @@ class ArticleController extends Controller
      */
     public function create()
     {
-        $this->checkIsConnected();
         $errors = [];
         if (isset($_POST['author']) && isset($_POST['content']) && isset($_POST['linked_image'])) {
-            $this->checkToken();
-            $article = new Article();
-            $article->setTitle($_POST['title']);
-            $article->setAuthor($_POST['author']);
-            $article->setImage($_POST['linked_image']);
-            $article->setArticleContent($_POST['content']);
-
-            $errors = $article->validate();
-            if (!$errors) {
-                $this->articleManager->postArticle($_POST['title'], $_POST['author'], $_POST['content'], $_POST['linked_image']);
-                $this->redirect();
-
+            if ($this->checkToken()) {
+                $article = new Article();
+                $article->setTitle($_POST['title']);
+                $article->setAuthor($_POST['author']);
+                $article->setImage($_POST['linked_image']);
+                $article->setArticleContent($_POST['content']);
+                $errors = $article->validate();
+                if (!$errors) {
+                    $this->articleManager->postArticle($_POST['title'], $_POST['author'], $_POST['content'], $_POST['linked_image']);
+                    $this->redirect('adminArticlePanel');
+                } else {
+                    $this->render("addArticle", ['errors' => $errors]);
+                }
             }
+        } else {
+            throw new NotFoundException('La page n\'existe pas');
         }
-        $this->render("addArticle", ['errors' => $errors]);
+    }
+
+    public function addArticle()
+    {
+        $this->render("addArticle");
     }
 
     /**
@@ -83,6 +88,7 @@ class ArticleController extends Controller
      */
     function showModify($id)
     {
+        ($this->checkIsConnected());
         try {
             $article = $this->articleManager->getArticle($id);
         } catch (Exception $e) {
@@ -99,14 +105,26 @@ class ArticleController extends Controller
     {
         $articleManager = new ArticleManager();
         $page = $_GET['page'] ?? 1;
-
         $articles = $articleManager->getArticles($page);
+        $buttons = $this->buttonsNavbar();
 
         if (!count($articles)) {
             throw new NotFoundException("Pas d'autres articles");
         }
 
-        $this->render("listArticle", ['articles' => $articles]);
+        $this->render("listArticle", ['articles' => $articles, 'buttons' => $buttons]);
+    }
+
+    public function buttonsNavbar()
+    {
+        $num = ($this->articleManager->countArticles());
+        $nb = intdiv($num, 6);
+        if ($nb * 6 < $num) {
+            $nb += 1;
+        }
+//        $nb = round(($num/5.)+0.5, 0, PHP_ROUND_HALF_UP);
+
+        return $nb;
     }
 
     /**
@@ -147,13 +165,12 @@ class ArticleController extends Controller
     public function modify($id)
     {
         if (isset($_POST['title']) && isset($_POST['author']) && isset($_POST['content']) && isset($_POST['linked_image'])) {
-            $this->checkToken();
+            ($this->checkToken());
             $articlemanager = new ArticleManager();
             $articlemanager->modifyArticle($id, $_POST['title'], $_POST['author'], $_POST['content'], $_POST['linked_image']);
-            $this->redirect('adminPanel');
+            $this->redirect('adminArticlePanel');
         } else {
             throw new Exception('Les champs ne sont pas remplis correctement');
         }
     }
-
 }

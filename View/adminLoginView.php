@@ -12,11 +12,11 @@ if ($errors) { ?>
 <?php } ?>
     <div class="container">
         <form action="index.php?action=login" method="post">
-            <h3>Utilisateur</h3>
-            <input type="text" name="user">
+            <br/><h3>Utilisateur</h3>
+            <input type="text" name="user" class="form-control">
             <h3>Mot de passe</h3>
-            <input type="password" name="password">
-            <input type="submit" value="Valider">
+            <input type="password" name="password" class="form-control">
+            <br/><input type="submit" value="Valider" class="btn btn-primary">
         </form>
     </div>
 <?php
