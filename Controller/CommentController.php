@@ -13,6 +13,7 @@ use App\Model\CommentManager;
 class CommentController extends Controller
 {
     /**
+     *
      * @param $idArticle
      * @param $alias
      * @param $content

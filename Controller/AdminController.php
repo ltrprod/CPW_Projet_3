@@ -100,7 +100,7 @@ class AdminController extends Controller
             $error = 'Vous devez vous connecté pour pouvoir vous deconnecter.';
             $errors[] = $error;
         }
-        $this->render('adminLogin', ['errors' => $errors]);;
+        $this->render('adminLogin', ['errors' => $errors]);
     }
 
 }

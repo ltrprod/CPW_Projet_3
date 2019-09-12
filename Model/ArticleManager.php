@@ -72,7 +72,7 @@ class ArticleManager extends Manager
         $db = $this->dbConnect();
         $req = $db->prepare('SELECT id, title, date, author, content, image FROM article ORDER BY date DESC LIMIT :offset, :limit');
         $req->bindValue(':limit', self::LIMIT_ARTICLE_PER_PAGE, PDO::PARAM_INT);
-        $req->bindValue(':offset', ($page-1) * self::LIMIT_ARTICLE_PER_PAGE, PDO::PARAM_INT);
+        $req->bindValue(':offset', ($page - 1) * self::LIMIT_ARTICLE_PER_PAGE, PDO::PARAM_INT);
         $req->execute();
         return $req->fetchAll();
     }
@@ -129,5 +129,11 @@ class ArticleManager extends Manager
         return $array[0][0];
     }
 
+    public function countPages(): int
+    {
+        $sum = $this->countArticles();
+
+        return ceil($sum / self::LIMIT_ARTICLE_PER_PAGE);
+    }
 }
 

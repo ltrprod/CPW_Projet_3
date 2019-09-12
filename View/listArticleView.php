@@ -9,13 +9,13 @@ ob_start() ?>
                        style="display: inline"><<</a>
                     <?php
                     $i = 1;
-                    while ($i <= $buttons) { ?>
-                        <a role="button" class="btn btn-sm btn-outline-secondary" style="display: inline"
+                    while ($i <= $nbPages) { ?>
+                        <a role="button" class="btn btn-sm btn-outline-secondary d-inline"
                            href="index.php?action=home&amp;page=<?= $i; ?>"><?= $i; ?></a>
                         <?php $i++;
                     }
                     ?>
-                    <a role="button" class="btn btn-sm btn-outline-secondary" style="display: inline"
+                    <a role="button" class="btn btn-sm btn-outline-secondary d-inline"
                        href="index.php?action=home&amp;page=<?= $i - 1; ?>">>></a>
                 </div>
             </div>
@@ -33,7 +33,7 @@ ob_start() ?>
                             </img>
                             <div class="card-body">
                                 <p><b><?= htmlspecialchars($data['title']) ?></b></p>
-                                <p class="card-text"><?= substr(strip_tags($data['content']), 0, 300) . '...' ?></p>
+                                <p class="card-text"><?= mb_substr(strip_tags($data['content']), 0, 300) . '...' ?></p>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
                                         <a role="button" class="btn btn-sm btn-outline-secondary"

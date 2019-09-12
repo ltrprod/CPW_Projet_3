@@ -25,6 +25,9 @@ foreach ($comments as $data) :?>
             </form>
             <form style="margin-top: 15px;" action="index.php?action=deleteComment&amp;id=<?= $data['id'] ?>" method="post">
                 <input class="btn btn-sm btn-outline-secondary" type="submit" value="Supprimer (définitif)">
+                <label>Etes-vous sûr ?
+                    <input type="checkbox" required="required">
+                </label>
                 <input type="hidden" name="token" id="token" value="<?php echo $_SESSION['token']; ?>"/>
             </form>
             <br/>

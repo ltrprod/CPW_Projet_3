@@ -106,26 +106,15 @@ class ArticleController extends Controller
         $articleManager = new ArticleManager();
         $page = $_GET['page'] ?? 1;
         $articles = $articleManager->getArticles($page);
-        $buttons = $this->buttonsNavbar();
 
         if (!count($articles)) {
             throw new NotFoundException("Pas d'autres articles");
         }
 
-        $this->render("listArticle", ['articles' => $articles, 'buttons' => $buttons]);
+        $this->render("listArticle", ['articles' => $articles, 'nbPages' => $articleManager->countPages()]);
     }
 
-    public function buttonsNavbar()
-    {
-        $num = ($this->articleManager->countArticles());
-        $nb = intdiv($num, 6);
-        if ($nb * 6 < $num) {
-            $nb += 1;
-        }
-//        $nb = round(($num/5.)+0.5, 0, PHP_ROUND_HALF_UP);
 
-        return $nb;
-    }
 
     /**
      *
