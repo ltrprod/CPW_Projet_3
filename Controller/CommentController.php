@@ -55,11 +55,13 @@ class CommentController extends Controller
      */
     public function showReported()
     {
-        $commentManager = new CommentManager();
-        $comments = $commentManager->getReportedComments();
-        $this->render("listReportedComments", [
-            'comments' => $comments
-        ]);
+        if ($this->checkIsConnected()){
+            $commentManager = new CommentManager();
+            $comments = $commentManager->getReportedComments();
+            $this->render("listReportedComments", [
+               'comments' => $comments
+            ]);
+        }
     }
 
     /**

@@ -27,7 +27,7 @@ ob_start() ?>
                 <br/></div>
 
             <div class="col-md-6">
-                <div class=" mb-6 shadow-sm">
+                <div class=" mb-6">
                     <a href="index.php?action=adminArticlePanel">
                     <img alt="Image d'illustration" aria-label="Placeholder: Thumbnail"
                          class="bd-placeholder-img card-img-top" src="View/img/gererArticles.svg"
@@ -49,7 +49,7 @@ ob_start() ?>
                 <br/></div>
 
             <div class="col-md-6">
-                <div class=" mb-6 shadow-sm">
+                <div class=" mb-6 ">
                     <a href="index.php?action=listReportedComments">
                     <img alt="Image d'illustration" aria-label="Placeholder: Thumbnail"
                          class="bd-placeholder-img card-img-top" src="View/img/reportedCom.svg"
@@ -71,7 +71,7 @@ ob_start() ?>
             </div>
 
             <div class="col-md-6">
-                <div class=" mb-6 shadow-sm">
+                <div class=" mb-6 ">
                     <a href="index.php?action=logout">
                     <img alt="Image d'illustration" aria-label="Placeholder: Thumbnail"
                          class="bd-placeholder-img card-img-top" src="View/img/logout.svg"

@@ -9,9 +9,8 @@
                 <img src="<?= htmlspecialchars($article->getImage()) ?>" alt="image chapitre" width=100% height=auto>
             </div>
             <div class="col-sm-9 col-md-9">
-                <b><?= htmlspecialchars($article->getTitle()) ?></b>
-                <p><?= $article->getArticleContent() ?></p>
-                <br/>
+                <b><?= htmlspecialchars($article->getTitle()) ?></b><br/>
+                <br/><?= $article->getArticleContent() ?>
                 <a href="index.php?action=listArticle" role="button" class="btn btn-sm btn-outline-secondary"
                    style="text-align: center">Retour aux chapitres</a>
             </div>
@@ -58,7 +57,7 @@
                                 <label for="exampleFormControlSelect1">Signaler le commentaire</label>
                                 <select class="form-control" name="reason">
                                     <option value="Contenu à caractère violent">Contenu à caractère violent</option>
-                                    <option value="Racisme">racisme</option>
+                                    <option value="Racisme">Racisme</option>
                                     <option value="Contenu à caractère sexuel">Contenu à caractère sexuel</option>
                                     <option value="Autre">Autre</option>
                                 </select>

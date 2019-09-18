@@ -1,0 +1,35 @@
+
+
+html {
+    background-color: black;
+    background: url('../img/background1.bmp') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+body { background-color: transparent !important; }
+
+.bg-light { background-color:transparent !important;
+    background-color: black;
+    background: url('../img/background1.bmp') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;}
+
+
+.pb-5, .py-5 {
+    padding-bottom: 0px !important;
+}
+
+
+
+footer{
+    background-color: white !important;
+}
+
+.comment-report{
+    background-color: white !important;
+}

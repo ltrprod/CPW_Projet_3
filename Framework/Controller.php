@@ -84,5 +84,16 @@ class Controller
             }
         }
         throw  new CSRFException();
+
+
+
+    }
+
+    /**
+     *
+     */
+    function home()
+    {
+        $this->render("home");
     }
 }

@@ -20,13 +20,9 @@ foreach($articles as $data) : ?>
             <br/>
             <form action="index.php?action=deleteArticle&amp;id=<?= $data['id']?>" method="post">
                 <input type="submit" value="Supprimer (définitif)">
-                <input type="checkbox" required>Etes-vous sûr ?
+                <br/><input type="checkbox" required>Etes-vous sûr ?
                 <input type="hidden" name="token" id="token" value="<?php echo $_SESSION['token']; ?>"/>
             </form>
-            <br/>
-        </div>
-
-        <div class="col-sm-3 col-md-3">
             <br/><a href="index.php?action=articleModificationForm&amp;id=<?= $data['id']?>">Modifier l'article</a>
         </div>
     </div><br/>

@@ -9,6 +9,7 @@ use App\Controller\ArticleController;
 use App\Controller\CommentController;
 use App\Controller\ErrorController;
 use App\Framework\Autoloader;
+use App\Framework\Controller;
 use App\Framework\Exception\CSRFException;
 use App\Framework\Exception\NeedAuthenticationException;
 use App\Framework\Exception\NotFoundException;
@@ -21,7 +22,7 @@ try {
     switch ($action) {
 
         case "home":
-            (new ArticleController())->list();
+            (new Controller())->home();
             break;
 
         case "listArticle":

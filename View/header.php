@@ -13,6 +13,7 @@ use App\Framework\Controller;
     <!-- Bootstrap CSS -->
 
     <link rel="stylesheet" href="View/css/navbar.css">
+    <link rel="stylesheet" href="View/css/home.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -40,7 +41,11 @@ use App\Framework\Controller;
 
 
 </div>
+
+<div class="content">
 <?= $content ?>
+</div>
+
 <!-- Footer -->
 <br/>
 <footer class="card-footer" id="footer" style="background-color: lightgray"><br/>
@@ -50,10 +55,14 @@ use App\Framework\Controller;
                 <h5>Index</h5>
                 <ul class="list-unstyled quick-links">
                     <li><a href="index.php"><i class="fa fa-angle-double-right"></i>Accueil</a></li>
-                    <li><a href="index.php?action=listArticle"><i class="fa fa-angle-double-right"></i>Chapitres</a>
-                    </li>
-                    <li><a href="index.php?action=login"><i class="fa fa-angle-double-right"></i>Connexion</a></li>
-                    <li><a href="test.php"><i class="fa fa-angle-double-right"></i>Autre</a></li>
+                    <li><a href="index.php?action=listArticle"><i class="fa fa-angle-double-right"></i>Chapitres</a></li>
+                    <?php if (isset($_SESSION['isConnected'])) : ?>
+                        <li><a href="index.php?action=adminPanel">Panneau d'administration</a></li>
+                        <li><a href="index.php?action=logout">Deconnexion</a></li>
+                    <?php else: ?>
+                        <li><a href="index.php?action=login">Connexion</a></li>
+                    <?php endif; ?>
+
                 </ul>
             </div>
             <div class="col-xs-12 col-sm-4 col-md-4">
@@ -79,10 +88,7 @@ use App\Framework\Controller;
                 </ul>
             </div>
         </div>
-
     </div>
 </footer>
-<!-- ./Footer -->
 </body>
-
 </html>

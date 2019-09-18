@@ -5,21 +5,20 @@ ob_start() ?>
         <div class="container">
             <div style="width: 100%; text-align: center">
                 <div class="btn-group" style="text-align: center; margin: 1em 5em ; display: inline-block;">
-                    <a role="button" class="btn btn-sm btn-outline-secondary" href="index.php?action=home&amp;page=1"
+                    <a role="button" class="btn btn-sm btn-outline-secondary" href="index.php?action=listArticle&amp;page=1"
                        style="display: inline"><<</a>
                     <?php
                     $i = 1;
                     while ($i <= $nbPages) { ?>
                         <a role="button" class="btn btn-sm btn-outline-secondary d-inline"
-                           href="index.php?action=home&amp;page=<?= $i; ?>"><?= $i; ?></a>
+                           href="index.php?action=listArticle&amp;page=<?= $i; ?>"><?= $i; ?></a>
                         <?php $i++;
                     }
                     ?>
                     <a role="button" class="btn btn-sm btn-outline-secondary d-inline"
-                       href="index.php?action=home&amp;page=<?= $i - 1; ?>">>></a>
+                       href="index.php?action=listArticle&amp;page=<?= $i - 1; ?>">>></a>
                 </div>
             </div>
-
             <div class="row">
                 <?php
                 foreach ($articles as $data) : ?>
@@ -54,18 +53,18 @@ ob_start() ?>
                 <?php endforeach; ?>
                 <div style="width: 100%; text-align: center">
                     <div class="btn-group" style="text-align: center; margin: 1em 5em ; display: inline-block;">
-                        <a role="button" class="btn btn-sm btn-outline-secondary" href="index.php?action=home&amp;page=1"
+                        <a role="button" class="btn btn-sm btn-outline-secondary" href="index.php?action=listArticle&amp;page=1"
                            style="display: inline"><<</a>
                         <?php
                         $i = 1;
-                        while ($i <= $buttons) { ?>
-                            <a role="button" class="btn btn-sm btn-outline-secondary" style="display: inline"
-                               href="index.php?action=home&amp;page=<?= $i; ?>"><?= $i; ?></a>
+                        while ($i <= $nbPages) { ?>
+                            <a role="button" class="btn btn-sm btn-outline-secondary d-inline"
+                               href="index.php?action=listArticle&amp;page=<?= $i; ?>"><?= $i; ?></a>
                             <?php $i++;
                         }
                         ?>
-                        <a role="button" class="btn btn-sm btn-outline-secondary" style="display: inline"
-                           href="index.php?action=home&amp;page=<?= $i - 1; ?>">>></a>
+                        <a role="button" class="btn btn-sm btn-outline-secondary d-inline"
+                           href="index.php?action=listArticle&amp;page=<?= $i - 1; ?>">>></a>
                     </div>
                 </div>
             </div>

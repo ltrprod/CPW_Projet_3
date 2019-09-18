@@ -60,7 +60,9 @@ class ArticleController extends Controller
 
     public function addArticle()
     {
-        $this->render("addArticle");
+        if($this->checkIsConnected()) {
+            $this->render("addArticle");
+        }
     }
 
     /**
@@ -69,6 +71,7 @@ class ArticleController extends Controller
      */
     function show($id)
     {
+
         try {
             $article = $this->articleManager->getArticle($id);
         } catch (Exception $e) {
@@ -121,9 +124,11 @@ class ArticleController extends Controller
      */
     public function adminArticlePanel()
     {
-        $articleManager = new ArticleManager();
-        $articles = $articleManager->getAdminArticles();
-        $this->render("adminArticlePanel", ['articles' => $articles]);
+        if ($this->checkIsConnected()) {
+            $articleManager = new ArticleManager();
+            $articles = $articleManager->getAdminArticles();
+            $this->render("adminArticlePanel", ['articles' => $articles]);
+        }
     }
 
     /**

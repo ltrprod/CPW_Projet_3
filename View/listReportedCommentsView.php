@@ -4,7 +4,7 @@
 <?php
 foreach ($comments as $data) :?>
     <br/>
-    <div class="row border shadow-lg ">
+    <div class="row border shadow-lg comment-report">
         <div class="col-sm-4 col-md-4 " >
             <p>Posté par : <em><?= htmlspecialchars($data['alias']) ?></em></p>
             <p>Publié le : <em><?= htmlspecialchars($data['date']) ?></em></p>
